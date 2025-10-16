@@ -20,7 +20,7 @@ export interface User {
   gender: "Male" | "Female"; // Gender (restricted values)
   batch: string;              // e.g., "18th"
   selectedLocation: string;   // e.g., "Faridpur"
-  role: "user" | "admin" | "modarator";     // Role type
+  role: "user" | "admin" | "moderator";     // Role type
   dob: Timestamp; // Date of birth (Firestore timestamp → JS Date)
 }
 

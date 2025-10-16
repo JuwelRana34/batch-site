@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import NavLink from "./dashboardComponents/NavLink";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -10,17 +11,58 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-  <div className=" md:flex justify-between">
-  <div className="hidden md:block bg-red-50">
-    sidebar
-  </div>
-  <div>
-    {children}
-  </div>
-  
-  </div>
+  const NavItems = [
+    {
+      name: "Home",
+      href: "/dashboard",
+    },
+    {
+      name: "Users",
+      href: "/dashboard/users",
+    },
+    {
+      name: "Notice",
+      href: "/dashboard/notice",
+    },
+    {
+      name: "Upload-Pdf",
+      href: "/dashboard/upload-pdfs",
+    },
+    {
+      name: "Upload-photos",
+      href: "/dashboard/upload-photos",
+    },
+    {
+      name: "Upload-vides",
+      href: "/dashboard/upload-vides",
+    },
+    {
+      name: "Add-ExamDate",
+      href: "/dashboard/add-examDate",
+    },
+    {
+      name: "Add-ExamTable",
+      href: "/dashboard/add-examTable",
+    },
+  ];
 
-   
+  return (
+    <div className=" md:flex justify-between h-screen">
+      <div className=" md:w-[20%] hidden md:block ">
+        <h1 className="text-center my-3 text-lg font-semibold capitalize">
+          items
+        </h1>
+        <div className="flex flex-col">
+          {NavItems.map((item) => (
+            <NavLink
+              key={crypto.randomUUID()}
+              name={item.name}
+              href={item.href}
+            />
+          ))}
+        </div>
+      </div>
+      <div className=" px-2 md:w-[80%] bg-green-100 overflow-hidden overflow-y-scroll ">{children}</div>
+    </div>
   );
 }
