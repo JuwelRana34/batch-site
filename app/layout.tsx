@@ -1,8 +1,9 @@
+import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "@/context/AuthContext";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "@/components/ui/sonner";
-import { AuthProvider } from "@/context/AuthContext";
+import { Providers } from "@/context/TanstakProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,13 +28,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-      // REVIEW: remove bg and text color
+        // REVIEW: remove bg and text color
         className={`bg-black text-slate-400 ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthProvider>
-        {children}
-        </AuthProvider>
-         <Toaster richColors position="top-center" />
+        <Providers>
+          <AuthProvider>{children}</AuthProvider>
+          <Toaster richColors position="top-center" />
+        </Providers>
       </body>
     </html>
   );

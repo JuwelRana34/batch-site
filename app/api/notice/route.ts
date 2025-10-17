@@ -4,14 +4,14 @@ import { db } from "@/lib/firebase.admin";
 export async function GET() {
   try {
     // Try to read one collection from Firestore
-    const snapshot = await db.collection("users").get();
+    const snapshot = await db.collection("notices").get();
 
-    const users = snapshot.docs.map((doc) => ({
+    const notices = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
 
-    return Response.json({ success: true, users });
+    return Response.json({ success: true, notices });
   } catch (error) {
     console.error("Firestore test failed:", error);
     const errorMessage = typeof error === "object" && error !== null && "message" in error
