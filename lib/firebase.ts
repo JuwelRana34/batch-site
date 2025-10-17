@@ -1,7 +1,7 @@
 import { getApps, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
-import { getFirestore, collection } from "firebase/firestore";
+import { collection, getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const clientCredentials = {
@@ -19,14 +19,7 @@ const app = !getApps().length ? initializeApp(clientCredentials) : getApps()[0];
 const db = getFirestore(app);
 const storage = getStorage(app);
 const auth = getAuth(app);
-const NoticeCollection = collection(db, "posts");
+const NoticeCollection = collection(db, "notices");
 const usersCollection = collection(db, "users");
 
-export {
-  auth,
-  app,
-  db,
-  storage,
-  NoticeCollection,
-  usersCollection,
-};
+export { app, auth, db, NoticeCollection, storage, usersCollection };

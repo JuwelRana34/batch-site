@@ -6,11 +6,10 @@ const serviceAccount: ServiceAccount = {
   privateKey: process.env.FIREBASE_PRIVATE_KEY,
 };
 
-
 export function getFirebaseAdmin() {
   if (!admin.apps.length) {
     admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount)
+      credential: admin.credential.cert(serviceAccount),
     });
   }
 
@@ -21,4 +20,4 @@ const firebaseAdmin = getFirebaseAdmin();
 
 const db = firebaseAdmin.firestore();
 
-export { firebaseAdmin, db };
+export { db, firebaseAdmin };

@@ -16,8 +16,8 @@ export default function NavLink({ name, href }: Props) {
   return (
     <Link
       href={href}
-      className={`text-lg py-2 px-4 rounded transition-all ${
-        isActive ? "bg-blue-500 text-white font-semibold" : ""
+      className={`text-lg py-2   px-4 rounded transition-all ${
+        isActive ? "bg-blue-100 text-blue-500 font-semibold" : ""
       }`}
     >
       {name}

@@ -48,8 +48,8 @@ export default function RootLayout({
 
   return (
     <div className=" md:flex justify-between h-screen">
-      <div className=" md:w-[20%] hidden md:block ">
-        <h1 className="text-center my-3 text-lg font-semibold capitalize">
+      <div className=" md:w-[15%] hidden md:block bg-white text-gray-500 border-r-2">
+        <h1 className="text-center my-3 text-md font-semibold capitalize">
           items
         </h1>
         <div className="flex flex-col">
@@ -62,7 +62,9 @@ export default function RootLayout({
           ))}
         </div>
       </div>
-      <div className=" px-2 md:w-[80%] bg-green-100 overflow-hidden overflow-y-scroll ">{children}</div>
+      <div className=" px-2 md:w-[85%] bg-white overflow-hidden overflow-y-scroll ">
+        {children}
+      </div>
     </div>
   );
 }

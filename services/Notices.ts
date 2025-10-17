@@ -1,19 +1,12 @@
-import{NoticeCollection}from "@/lib/firebase"
-import { Notice } from "@/types/allTypes";
-import { DocumentData, Query, getDocs } from "firebase/firestore";
+import { collection, getDocs } from 'firebase/firestore';
+import {db, NoticeCollection}from"@/lib/firebase"
 
-export async function index(query?: Query): Promise<Notice[]> {
-  let querySnapshot = null;
 
-  if (query) {
-    querySnapshot = await getDocs(query);
-  } else {
-    querySnapshot = await getDocs(NoticeCollection);
-  }
-
-  const localPosts = querySnapshot.docs.map((doc: DocumentData) => {
-    return { ...doc.data(), id: doc.id };
-  });
-
-  return localPosts as Notice[];
-}
+export const fetchData = async () => {
+  const querySnapshot = await getDocs(collection(db, "notices"));
+  return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+};
+// export const fetchData = async (): Promise<Notice[]> => {
+//   const querySnapshot = await getDocs(collection(db, NoticeCollection));
+//   return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Notice[];
+// };
