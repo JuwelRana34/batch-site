@@ -104,7 +104,7 @@ export default function SignIn() {
           setIsLoggedIn(true);
         }
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error signing in with Google:", error);
       toast.error("Failed to sign in with Google.");
     }
