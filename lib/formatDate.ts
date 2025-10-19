@@ -26,44 +26,28 @@
 
 
 import { format } from "date-fns";
+import { Timestamp } from "firebase/firestore";
 
-// You can define a union type for possible Firestore/JS date inputs
-type FirestoreTimestampLike =
-  | Date
-  | string
-  | {
-      toDate?: () => Date;
-      _seconds?: number;
-      _nanoseconds?: number;
-    };
+type FirestoreDateValue = Timestamp | Date | string | null | undefined;
 
 export const formatDate = (
-  value: FirestoreTimestampLike,
+  value: FirestoreDateValue,
   fmt: string = "dd MMM yyyy, hh:mm a"
 ): string => {
   if (!value) return "Unknown date";
 
   let date: Date;
 
-  // Firestore Timestamp object
-  if (typeof (value as any).toDate === "function") {
-    date = (value as any).toDate();
-  }
-  // Raw Firestore JSON (_seconds + _nanoseconds)
-  else if (
-    (value as any)._seconds !== undefined &&
-    (value as any)._nanoseconds !== undefined
-  ) {
-    const v = value as { _seconds: number; _nanoseconds: number };
-    date = new Date(v._seconds * 1000 + v._nanoseconds / 1_000_000);
-  }
-  // JS Date or string
-  else {
-    date = new Date(value as string | number | Date);
+  if (value instanceof Timestamp) {
+    date = value.toDate();
+  } else if (value instanceof Date) {
+    date = value;
+  } else {
+    date = new Date(value);
   }
 
-  // Check valid date
   if (isNaN(date.getTime())) return "Invalid date";
 
   return format(date, fmt);
 };
+
