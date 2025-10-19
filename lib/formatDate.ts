@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 
-export const formatDate = (value: any, fmt: string = "dd MMM yyyy, hh:mm a") => {
+export const formatDate = (value, fmt: string = "dd MMM yyyy, hh:mm a") => {
   if (!value) return "Unknown date";
 
   let date: Date;

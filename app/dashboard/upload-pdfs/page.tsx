@@ -1,10 +1,7 @@
 import React from 'react';
 
-interface Props {
-  
-}
 
-export default function page(props: Props) {
+export default function Page() {
   return (
     <div>
       uploads pdf page

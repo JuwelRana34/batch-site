@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface Props {
-  
-}
-
-export default function page(props: Props) {
+export default function page() {
   return (
     <div>
       add examtable page

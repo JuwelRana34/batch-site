@@ -60,7 +60,7 @@ export default function SignUp() {
       await sendEmailVerification(user);
       toast.success("✅ Registration successful! Please verify your email.");
       router.push("/login");
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
       toast.error("User already registered or invalid input!");
     } finally {

@@ -27,7 +27,7 @@ export default function RoleDropdown({ uid, currentRole }: Props) {
       const data = await res.json();
       if (data.success) toast.success(data.message);
       else toast.error(data.error);
-    } catch (err: any) {
+    } catch (err) {
       toast.error(err.message || "Failed to update role");
     } finally {
       setLoading(false);

@@ -1,5 +1,5 @@
 // lib/apiClient.ts
-export const apiClient = async <T = any>(
+export const apiClient = async <T>(
   url: string,
   options?: RequestInit
 ): Promise<T> => {

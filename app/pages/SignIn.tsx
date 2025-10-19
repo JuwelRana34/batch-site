@@ -61,7 +61,7 @@ export default function SignIn() {
         await auth.signOut();
         toast.error("Please verify your email before logging in.");
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error logging in:", error);
       toast.error(`Error: ${error.message}`);
     }

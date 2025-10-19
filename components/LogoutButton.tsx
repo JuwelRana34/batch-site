@@ -18,7 +18,7 @@ export default function LogoutButton() {
       await logout();
       toast.success("👋 Logged out successfully!");
       router.push("/"); // redirect to homepage
-    } catch (error: any) {
+    } catch (error) {
       console.error("Logout error:", error);
       toast.error(`Failed to logout: ${error.message || error}`);
     } finally {

@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ success: true, isAdmin });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error setting session:", error);
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
