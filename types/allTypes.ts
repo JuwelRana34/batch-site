@@ -4,10 +4,10 @@ export interface Notice {
   id: string;    // Firestore document ID
   title: string; // Post title
   text: string;            
-  authorId: string;          
+  authorId?: string;          
   createdAt: Timestamp; // Firestore timestamp
   updatedAt?: Timestamp; // Optional updated time
-  isPublished: boolean;   // Status flag
+  isPublished?: boolean;   // Status flag
 }
 // types/user.ts
 

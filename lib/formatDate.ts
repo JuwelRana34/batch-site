@@ -26,28 +26,36 @@
 
 
 import { format } from "date-fns";
-import { Timestamp } from "firebase/firestore";
+import type { Timestamp as AdminTimestamp } from "firebase-admin/firestore";
 
-type FirestoreDateValue = Timestamp | Date | string | null | undefined;
+type FirestoreDateValue = AdminTimestamp | Date | string | null | undefined;
 
 export const formatDate = (
   value: FirestoreDateValue,
-  fmt: string = "dd MMM yyyy, hh:mm a"
+  fmt: string = "dd MMM yyyy, HH:mm"
 ): string => {
   if (!value) return "Unknown date";
 
   let date: Date;
 
-  if (value instanceof Timestamp) {
-    date = value.toDate();
-  } else if (value instanceof Date) {
+  // Admin SDK Timestamp
+  if ((value as AdminTimestamp)?.toDate instanceof Function) {
+    date = (value as AdminTimestamp).toDate();
+  } 
+  // JS Date
+  else if (value instanceof Date) {
     date = value;
-  } else {
+  } 
+  // string
+  else if (typeof value === "string") {
     date = new Date(value);
+  } 
+  else {
+    // Should never happen, fallback
+    return "Invalid date";
   }
 
   if (isNaN(date.getTime())) return "Invalid date";
 
   return format(date, fmt);
 };
-
