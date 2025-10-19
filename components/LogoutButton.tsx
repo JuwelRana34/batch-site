@@ -20,7 +20,8 @@ export default function LogoutButton() {
       router.push("/"); // redirect to homepage
     } catch (error) {
       console.error("Logout error:", error);
-      toast.error(`Failed to logout: ${error.message || error}`);
+      toast.error(`Failed to logout: ${(error as Error).message || error}`);
+      
     } finally {
       setLoading(false);
     }
