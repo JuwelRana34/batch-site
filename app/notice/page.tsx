@@ -1,3 +1,4 @@
+import { fetchData } from "@/actions/getdata";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -32,20 +33,12 @@ import {
 export const revalidate = 345600; // 4 days
 
 export default async function Page() {
-  // Firestore fetch
-  const snapshot = await db.collection("notices").get();
+  const notices = await fetchData("notices");
 
-  // Tell TypeScript that data matches your Notice type (except id)
-  const notices: Notice[] = snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...(doc.data() as Omit<Notice, "id">),
-  }));
-
-//   console.log("notices:", notices);
 
   return (
-    <div className="min-h-screen  py-12 px-4 md:px-20 max-w-7xl mx-auto">
-      <h1 className="text-4xl font-bold mb-10 text-center text-primay">
+    <div className="h-screen  py-12 px-4 md:px-20 max-w-7xl mx-auto">
+      <h1 className=" text-4xl font-bold mb-10 text-center text-textColor">
         Official Notices
       </h1>
       {notices?.length === 0 ? (
@@ -54,7 +47,7 @@ export default async function Page() {
             <EmptyMedia className="bg-white text-gray-500" variant="icon">
               <Notebook />
             </EmptyMedia>
-            <EmptyTitle>No Notices available</EmptyTitle>
+            <EmptyTitle>No Notices </EmptyTitle>
             <EmptyDescription>
               You&apos;re all caught up. New notifications will appear here.
             </EmptyDescription>
@@ -67,11 +60,11 @@ export default async function Page() {
           </EmptyContent>
         </Empty>
       ) : (
-        <div className="grid gap-0 grid-cols-1 ">
+        <div className="notice grid gap-0 grid-cols-1 pb-5 ">
           {notices?.map((post: Notice) => (
             <Card
-              key={post.id}
-              className="shadow-md rounded-none hover:shadow-xl transition-shadow duration-300 border border-gray-200 p-4 flex flex-col justify-between gap-0 m-0"
+              key={crypto.randomUUID()}
+              className="shadow-md rounded-none hover:shadow-xl transition-shadow duration-300 border border-gray-200 p-4 flex flex-col justify-between gap-0 m-0 first:rounded-t-md last:rounded-b-2xl"
             >
               <div className="">
                 <div className="flex justify-between items-start">

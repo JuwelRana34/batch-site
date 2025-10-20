@@ -28,8 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        // REVIEW: remove bg and text color
-        className={`bg-black text-slate-400 ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
           <AuthProvider>{children}</AuthProvider>
