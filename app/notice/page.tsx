@@ -19,7 +19,6 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
-import { db } from "@/lib/firebase.admin";
 import { formatDate } from "@/lib/formatDate";
 import { Notice } from "@/types/allTypes";
 import {
@@ -33,8 +32,7 @@ import {
 export const revalidate = 345600; // 4 days
 
 export default async function Page() {
-  const notices = await fetchData("notices");
-
+  const notices = await fetchData<Notice>("notices");
 
   return (
     <div className="h-screen  py-12 px-4 md:px-20 max-w-7xl mx-auto">

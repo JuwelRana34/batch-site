@@ -1,15 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
-import { Pdf } from "@/types/allTypes";
 import { Button } from "@/components/ui/button";
-import { Calendar, FileText, Link as LinkIcon } from "lucide-react";
 import { formatDate } from "@/lib/formatDate";
-import Link from "next/link";
+import { Calendar, FileText, Link as LinkIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+
+interface PdfWithStringDate {
+  name: string;
+  link: string;
+  year: string;
+  createdAt: string; // string date
+}
 
 interface Props {
-  pdfs: Pdf[];
+  pdfs: PdfWithStringDate[];
 }
 
 const years = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
@@ -50,18 +56,26 @@ export default function PdfList({ pdfs }: Props) {
               <div>
                 <h3 className="text-lg font-semibold flex items-center  text-primary">
                   {/* <FileText size={18} /> {pdf.name} */}
-                  <Image src={"https://cdn-icons-png.flaticon.com/128/4726/4726010.png"}
-                  height={500} 
-                width={500} alt="pdf icon" 
-                className="w-10 h-10 "/> 
-                 {pdf.name}
+                  <Image
+                    src={
+                      "https://cdn-icons-png.flaticon.com/128/4726/4726010.png"
+                    }
+                    height={500}
+                    width={500}
+                    alt="pdf icon"
+                    className="w-10 h-10 "
+                  />
+                  {pdf.name}
                 </h3>
                 <p className="text-gray-500 text-sm flex items-center gap-2 mt-1 pl-1">
                   <Calendar size={16} /> Uploaded: {formatDate(pdf.createdAt)}
                 </p>
               </div>
 
-              <Button asChild className="bg-orange-100 text-orange-500 hover:bg-orange-200">
+              <Button
+                asChild
+                className="bg-orange-100 text-orange-500 hover:bg-orange-200"
+              >
                 <Link
                   href={pdf.link}
                   target="_blank"
