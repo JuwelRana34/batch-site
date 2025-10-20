@@ -30,3 +30,9 @@ export interface Pdf {
   year: string;          // e.g., "1st Year"
   createdAt: Timestamp;  // Firestore timestamp
 }
+
+export interface ExamDate {
+  date:Timestamp;
+  showCountdown: boolean;
+  createdAt: Timestamp;
+}

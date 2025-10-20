@@ -45,7 +45,7 @@
 }
 
 :root {
-  --textColor:oklch(44.6% 0.043 257.281);
+  --textColor: oklch(44.6% 0.043 257.281);
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
@@ -125,11 +125,10 @@
 }
 
 .fcshadow {
-   box-shadow: -9px -9px 16px rgba(255, 255, 255, 0.8), /* Top-left highlight */
-                        9px 9px 16px rgba(163, 177, 198, 0.6); 
+  box-shadow: -9px -9px 16px rgba(255, 255, 255, 0.8),
+    /* Top-left highlight */ 9px 9px 16px rgba(163, 177, 198, 0.6);
 }
 .acive {
-    box-shadow: inset -7px -7px 15px rgba(255, 255, 255, 0.8),
-                        inset 7px 7px 15px rgba(163, 177, 198, 0.6);
-
-  }
+  box-shadow: inset -7px -7px 15px rgba(255, 255, 255, 0.8),
+    inset 7px 7px 15px rgba(163, 177, 198, 0.6);
+}

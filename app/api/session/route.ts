@@ -16,13 +16,33 @@ if (!getApps().length) {
 export async function POST(req: Request) {
   try {
     const { token } = await req.json();
+  // 5 days in milliseconds
+    const expiresIn = 60 * 60 * 24 * 5 * 1000;
+     // Create long-lived session cookie
+    const sessionCookie = await getAuth().createSessionCookie(token, { expiresIn });
 
-    const decoded = await getAuth().verifyIdToken(token);
-    const isAdmin = decoded.admin === true;
+  //   const decoded = await getAuth().verifyIdToken(token);
+  //   const isAdmin = decoded.admin === true;
 
-    // Save cookie (valid for 5 days)
+  //   // Save cookie (valid for 5 days)
+  //   const cookieStore = await cookies();
+  //   cookieStore.set("session", token, {
+  //     httpOnly: true,
+  //     secure: process.env.NODE_ENV === "production",
+  //     sameSite: "lax",
+  //     path: "/",
+  //     maxAge: 60 * 60 * 24 * 5,
+  //   });
+
+  //   return NextResponse.json({ success: true, isAdmin });
+  // } catch (error) {
+  //   console.error("Error setting session:", error);
+  //   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  // }
+
+    // Set the session cookie
     const cookieStore = await cookies();
-    cookieStore.set("session", token, {
+    cookieStore.set("session", sessionCookie, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
@@ -30,9 +50,9 @@ export async function POST(req: Request) {
       maxAge: 60 * 60 * 24 * 5,
     });
 
-    return NextResponse.json({ success: true, isAdmin });
-  } catch (error) {
-    console.error("Error setting session:", error);
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error("Error setting session:", err);
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 }

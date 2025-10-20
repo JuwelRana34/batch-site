@@ -20,7 +20,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 export default function SignIn() {
@@ -30,90 +30,95 @@ export default function SignIn() {
   const [redirectToProfileSetup, setRedirectToProfileSetup] =
     useState<boolean>(false);
 
+  const [isEmailPending, startEmailTransition] = useTransition();
+  const [isGooglePending, startGoogleTransition] = useTransition();
+
   const router = useRouter();
 
   // 🔹 Email/Password Login
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
 
-      if (user.emailVerified) {
-        const token = await user.getIdToken();
+    startEmailTransition(async () => {
+      try {
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        const user = userCredential.user;
+
+        if (user.emailVerified) {
+          const token = await user.getIdToken(true);
+
+          await fetch("/api/session", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token }),
+          });
+
+          setIsLoggedIn(true);
+          setEmail("");
+          setPassword("");
+          toast.success("Login successful!");
+          router.push("/");
+        } else {
+          await auth.signOut();
+          toast.error("Please verify your email before logging in.");
+        }
+      } catch (err) {
+        console.error("Error logging in:", err);
+        toast.error(`Error:  ${(err as Error).message}` || "Failed to login");
+      }
+    });
+  };
+
+  // 🔹 Google Login
+  const handleGoogleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    startGoogleTransition(async () => {
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        const token = await user.getIdToken(true);
 
         await fetch("/api/session", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ token }),
         });
-
-        setIsLoggedIn(true);
-        setEmail("");
-        setPassword("");
-        toast.success("Login successful!");
         router.push("/");
-      } else {
-        await auth.signOut();
-        toast.error("Please verify your email before logging in.");
-      }
-    } catch (err) {
-      console.error("Error logging in:", err);
-      toast.error(`Error:  ${(err as Error).message}` || "Failed to login");
-    }
-  };
+        if (user) {
+          const userRef = doc(db, "users", user.uid);
+          const docSnap = await getDoc(userRef);
 
-  // 🔹 Google Login
-  const handleGoogleLogin = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-
-      const token = await user.getIdToken();
-
-      await fetch("/api/session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
-      });
-      if (user) {
-        const userRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(userRef);
-
-        if (!docSnap.exists()) {
-          await setDoc(userRef, {
-            uid: user.uid,
-            email: user.email,
-            name: user.displayName || "",
-            isNewGoogleUser: true,
-            role: "user",
-            googleSignIn: true,
-          });
-          setRedirectToProfileSetup(true);
-          toast.success(`Welcome ${user.displayName || "new user"}!`);
-        } else if (docSnap.data()?.isNewGoogleUser) {
-          setRedirectToProfileSetup(true);
-          toast.success(`Welcome back ${user.displayName}!`);
-        } else {
-          toast.success(`Welcome ${user.displayName || "user"}!`);
-          setIsLoggedIn(true);
+          if (!docSnap.exists()) {
+            await setDoc(userRef, {
+              uid: user.uid,
+              email: user.email,
+              name: user.displayName || "",
+              isNewGoogleUser: true,
+              role: "user",
+              googleSignIn: true,
+            });
+            setRedirectToProfileSetup(true);
+            toast.success(`Welcome ${user.displayName || "new user"}!`);
+            // 🔹 Redirect after successful login
+          } else if (docSnap.data()?.isNewGoogleUser) {
+            setRedirectToProfileSetup(true);
+            toast.success(`Welcome back ${user.displayName}!`);
+          } else {
+            toast.success(`Welcome ${user.displayName || "user"}!`);
+            setIsLoggedIn(true);
+          }
         }
+      } catch (error) {
+        console.error("Error signing in with Google:", error);
+        toast.error("Failed to sign in with Google.");
       }
-    } catch (error) {
-      console.error("Error signing in with Google:", error);
-      toast.error("Failed to sign in with Google.");
-    }
+    });
   };
 
-  // 🔹 Redirect after successful login
-  if (isLoggedIn) {
-    router.push("/");
-  }
   // TODO:add route
 
   if (redirectToProfileSetup) {
@@ -158,8 +163,12 @@ export default function SignIn() {
               />
             </div>
 
-            <Button type="submit" className="w-full mt-4">
-              Login
+            <Button
+              disabled={isEmailPending}
+              type="submit"
+              className="w-full mt-4 disabled:cursor-not-allowed"
+            >
+              {isEmailPending ? "LoginIng..." : "Login"}
             </Button>
 
             <div className="text-right">
@@ -181,8 +190,9 @@ export default function SignIn() {
 
           <Button
             onClick={handleGoogleLogin}
+            disabled={isGooglePending}
             variant="outline"
-            className="w-full flex items-center justify-center gap-2 hover:bg-gray-100"
+            className="w-full disabled:cursor-not-allowed flex items-center justify-center gap-2 hover:bg-gray-100"
           >
             <Image
               src="https://cdn-icons-png.flaticon.com/128/2504/2504914.png"
@@ -190,7 +200,7 @@ export default function SignIn() {
               width={20}
               height={20}
             />
-            Sign in with Google
+            {isGooglePending ? "signing.." : "Sign in with Google"}
           </Button>
 
           <div className="text-center mt-6">

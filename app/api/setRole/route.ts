@@ -1,5 +1,5 @@
 import { firebaseAdmin } from "@/lib/firebase.admin";
-
+import { getAuth } from "firebase-admin/auth";
 import { cookies } from "next/headers";
 
 export async function POST(req: Request) {
@@ -15,9 +15,7 @@ export async function POST(req: Request) {
     }
 
     // 🔹 Firebase Admin দিয়ে session verify করুন
-    const decodedClaims = await firebaseAdmin
-      .auth()
-      .verifyIdToken(session, true);
+    const decodedClaims = await getAuth().verifySessionCookie(session, true);
 
     // 🔹 শুধু admin role আছে কিনা চেক করুন
     if (!decodedClaims.admin) {
@@ -36,18 +34,16 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-
     const claims: Record<string, boolean> = {};
+    // 🔹 Only set custom claims for admin/moderator roles
+    if (role === "admin" || role === "moderator") {
+      if (role === "admin") claims.admin = true;
+      if (role === "moderator") claims.moderator = true;
 
-    if (role === "moderator") {
-      claims.moderator = true;
-    } else if (role === "admin") {
-      claims.admin = true;
+      await firebaseAdmin.auth().setCustomUserClaims(uid, claims);
     } else {
-      return Response.json(
-        { success: false, error: "Invalid role" },
-        { status: 400 }
-      );
+      // If downgrading to "user", remove all custom claims
+      await firebaseAdmin.auth().setCustomUserClaims(uid, {});
     }
 
     // ✅ Set custom user claims
