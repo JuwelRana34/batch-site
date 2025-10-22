@@ -9,12 +9,13 @@ export default async function page() {
  console.log('examDate:', examDate);
 
   return (
-    <div>
+    <div className='h-screen'>
       users manage page
       {
         examDate.map(d=>(
           <div key={d.date.toString()}>
-            {formatDate(d.date)}
+            {formatDate(d.date)} <br />
+            {d.name}
              
           </div>
         ))

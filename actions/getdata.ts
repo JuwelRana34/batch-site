@@ -13,16 +13,20 @@ export async function fetchData<T extends { createdAt: Timestamp }>(
   const snapshot = await db.collection(collectionName).get();
   // Map and sort newest first
   const data: T[] = snapshot.docs
-    .map((doc) => ({
-      ...(doc.data() as T),
-    }))
+    .map((doc) =>{
+      const docData = doc.data() as T;
+      return {
+      id: doc.id,
+      ...docData
+      }
+    })
     .sort((a, b) => b.createdAt.toMillis() - a.createdAt.toMillis()); // newest first
 
   return data;
 }
 
 
-export async function saveExamDate(examDate:{date:Date,createdAt:Date,showCountdown:boolean}) {
+export async function saveExamDate(examDate:{name:string,date:Date,createdAt:Date,showCountdown:boolean}) {
   if (!examDate.date) throw new Error("Date is required");
   const cookieStore = await cookies();
   const session = cookieStore.get("session")?.value;

@@ -10,7 +10,7 @@ export default function Home() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="">
+    <div className="min-h-screen">
       {user && isAdmin ? <p>Welcome, Admin!</p> : <p>Normal User</p>}
       {user && isModerator ? <p>Welcome, Moderator!</p> : <p>Normal User</p>}
 

@@ -1,7 +1,7 @@
 import { Timestamp } from "firebase/firestore";
 
 export interface Notice {
-  // id: string;    // Firestore document ID
+  id: string;    // Firestore document ID
   title: string; // Post title
   text: string;            
   authorId?: string;          
@@ -24,7 +24,8 @@ export interface User {
   dob: Timestamp; // Date of birth (Firestore timestamp → JS Date)
 }
 
-export interface Pdf {
+export interface Pdf { 
+  id:string;            // Firestore document ID
   name: string;          // Name/title of the PDF
   link: string;          // Google Drive or file link
   year: string;          // e.g., "1st Year"
@@ -32,6 +33,8 @@ export interface Pdf {
 }
 
 export interface ExamDate {
+  id: string;
+  name: string;
   date:Timestamp;
   showCountdown: boolean;
   createdAt: Timestamp;
