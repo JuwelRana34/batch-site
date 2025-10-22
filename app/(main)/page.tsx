@@ -2,7 +2,6 @@
 
 import LogoutButton from "@/components/LogoutButton";
 import { useAuth } from "@/context/AuthContext";
-import { auth } from "@/lib/firebase";
 import Link from "next/link";
 
 export default function Home() {

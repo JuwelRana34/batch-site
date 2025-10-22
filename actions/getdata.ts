@@ -61,3 +61,40 @@ export async function saveExamDate(examDate:{name:string,date:Date,createdAt:Dat
     return { success: false, message: "Failed to save exam date" };
   }
 }
+
+
+
+export async function saveExamTable(examDate:{examName:string,isCompleted:boolean,createdAt:Date, exams:{course:string,date:string,time:string}[]}) {
+  if (!examDate.examName) throw new Error("examName is required");
+  const cookieStore = await cookies();
+  const session = cookieStore.get("session")?.value;
+
+  if (!session) {
+    return { success: false, message: "Unauthorized: No session" };
+  }
+
+  // 🔹 Firebase Admin দিয়ে session verify করুন
+  const decodedClaims = await getAuth().verifySessionCookie(session, true);
+
+  // 🔹 শুধু admin role আছে কিনা চেক করুন
+  if (!decodedClaims.admin && !decodedClaims.moderator) {
+    return {
+      success: false,
+      message: "Unauthorized: Only admin and modarator can add exam table",
+    };
+  }
+
+  try {
+    const docRef = db.collection("examTables").doc();
+
+    // setDoc will create if not exists, overwrite if exists
+    await docRef.set(examDate);
+    
+    // REVIEW: revalidate the path where exam dates are displayed
+     revalidatePath("/");
+    return { success: true, message: "Exam Name saved successfully" };
+  } catch (err) {
+    console.error("Error saving exam date:", err);
+    return { success: false, message: "Failed to save exam date" };
+  }
+}

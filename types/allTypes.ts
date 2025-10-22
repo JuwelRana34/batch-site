@@ -39,3 +39,15 @@ export interface ExamDate {
   showCountdown: boolean;
   createdAt: Timestamp;
 }
+
+export interface ExamTable {
+  id: string;
+  examName: string;
+  isCompleted: boolean;
+  exams: {
+    course: string;
+    date: string;
+    time: string;
+  }[];
+  createdAt: Timestamp;
+}
