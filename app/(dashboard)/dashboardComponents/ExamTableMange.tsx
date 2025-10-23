@@ -1,40 +1,28 @@
-import { fetchData } from "@/actions/getdata";
-import { formatDate } from "@/lib/formatDate";
-import { ExamDate, ExamTable } from "@/types/allTypes";
-import { ExamToggle } from "../../dashboardComponents/ExamToggle";
-import Countdown from "../../dashboardComponents/CountDown";
+import { DeleteExamTable, fetchData } from "@/actions/getdata";
+import { ExamTable } from "@/types/allTypes";
+import { ExamToggle } from "./ExamToggle";
+import { Button } from "@/components/ui/button";
 
-export default async function page() {
-  const examDate = await fetchData<ExamDate>("exams");
+export default async function ExamTableManage() {
   const examList = await fetchData<ExamTable>("examTables");
-
   return (
-    <div className="h-screen">
-      users manage page
-      {examDate.map((d) =>{ 
-        const examDateISO = d.date.toDate
-    ? d.date.toDate().toISOString()
-    : new Date(d.date.seconds * 1000).toISOString();
-       return <div key={d.date.toString()}>
-          {formatDate(d.date)} <br />
-          {d.name}
-          <Countdown date={examDateISO} examName={d.name}/>
-        </div>
-      })}
+    <div className="p-2">
+      <h2 className="text-3xl text-center font-bold  capitalize text-transparent bg-clip-text bg-linear-to-l to-blue-600 from-green-500">Manage tables</h2>
       {examList.length > 0 &&
         examList.map((exam) => (
           <div
             key={exam.id}
-            className="mt-8 bg-white rounded-md shadow-lg border border-gray-200 overflow-hidden transition hover:shadow-xl"
+            className="mt-8 bg-white rounded-2xl shadow-lg border  overflow-hidden transition hover:shadow-xl"
           >
-            <div className="bg-gradient-to-r from-lime-600 to-emerald-500 text-white px-6 py-4 flex items-center justify-between">
+            <div className="bg-gradient-to-r from-green-400 to-blue-400 text-white px-6 py-4 flex items-center justify-between">
               <h2 className="text-xl font-semibold tracking-wide">
                 {exam.examName}
               </h2>
               <ExamToggle examId={exam.id} defaultActive={exam.isCompleted} />
+              <Button variant={"destructive"} size="sm">Delete</Button>
             </div>
 
-            <div className="p-4">
+            {/* <div className="p-4">
               <table className="w-full text-sm text-gray-700">
                 <thead>
                   <tr className="bg-gray-100 text-gray-800 border-b">
@@ -72,7 +60,7 @@ export default async function page() {
                   ))}
                 </tbody>
               </table>
-            </div>
+            </div> */}
           </div>
         ))}
     </div>

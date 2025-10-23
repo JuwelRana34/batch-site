@@ -17,12 +17,12 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useAuth } from "@/context/AuthContext";
-import { Menu } from "lucide-react";
+import { Menu} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Skeleton } from "./ui/skeleton";
 import LogoutButton from "./LogoutButton";
+import { Skeleton } from "./ui/skeleton";
 
 export default function Navbar() {
   const { user, loading, isAdmin, isModerator } = useAuth();
@@ -65,10 +65,9 @@ export default function Navbar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline">
-                  {" "}
                   <span className="text-md font-semibold bg-clip-text bg-linear-to-l from-blue-500 to-violet-500 text-transparent">
-                    {user.displayName}{" "}
-                  </span>{" "}
+                  {user.displayName}
+                  </span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="start">
@@ -104,7 +103,6 @@ export default function Navbar() {
                 {links.map((link) => (
                   <SheetClose key={link.href} asChild>
                     <Link
-                      
                       href={link.href}
                       className={` ${
                         pathname === link.href
@@ -116,31 +114,31 @@ export default function Navbar() {
                     </Link>
                   </SheetClose>
                 ))}
-                 {loading ? (
-            <Skeleton className="h-6 w-14" />
-          ) : user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline">
-                  {" "}
-                  <span className="text-md font-semibold bg-clip-text bg-linear-to-l from-blue-500 to-violet-500 text-transparent">
-                    {user.displayName}{" "}
-                  </span>{" "}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="start">
-                <DropdownMenuLabel>Manage Account</DropdownMenuLabel>
-                <DropdownMenuGroup>
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <Button asChild size="lg" className="ml-2">
-              <Link href={"/login"}>Login</Link>
-            </Button>
-          )}
-          <LogoutButton />
+                {loading ? (
+                  <Skeleton className="h-6 w-14" />
+                ) : user ? (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline">
+                        {" "}
+                        <span className="text-md font-semibold bg-clip-text bg-linear-to-l from-blue-500 to-violet-500 text-transparent">
+                          {user.displayName}{" "}
+                        </span>{" "}
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56" align="start">
+                      <DropdownMenuLabel>Manage Account</DropdownMenuLabel>
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem>Profile</DropdownMenuItem>
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <Button asChild size="lg" className="ml-2">
+                    <Link href={"/login"}>Login</Link>
+                  </Button>
+                )}
+                <LogoutButton />
               </div>
             </SheetContent>
           </Sheet>

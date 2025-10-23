@@ -98,3 +98,27 @@ export async function saveExamTable(examDate:{examName:string,isCompleted:boolea
     return { success: false, message: "Failed to save exam date" };
   }
 }
+
+
+export async function updateExamStatus(examId: string, isActive: boolean) {
+  try {
+    const ref = db.collection("examTables").doc(examId);
+    await ref.update({ isCompleted: isActive });
+    revalidatePath("/dashboard/add-examTable");
+    console.log(`Exam ${examId} updated to: ${isActive}`);
+  } catch (error) {
+    console.error("Error updating exam status:", error);
+    throw new Error("Failed to update exam status");
+  }
+}
+export async function DeleteExamTable(examId: string,) {
+  try {
+    const ref = db.collection("examTables").doc(examId);
+    await ref.delete();
+    revalidatePath("/dashboard/add-examTable");
+    console.log(`Exam ${examId} Deleted succesfully`);
+  } catch (error) {
+    console.error("Error updating exam status:", error);
+    throw new Error("Failed to update exam status");
+  }
+}
