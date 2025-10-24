@@ -7,6 +7,7 @@ import { Timestamp } from "firebase-admin/firestore";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
+// Generic function to fetch data from any collection
 export async function fetchData<T extends { createdAt: Timestamp }>(
   collectionName: string
 ): Promise<T[]> {
@@ -111,6 +112,8 @@ export async function updateExamStatus(examId: string, isActive: boolean) {
     throw new Error("Failed to update exam status");
   }
 }
+
+
 export async function DeleteExamTable(examId: string,) {
   try {
     const ref = db.collection("examTables").doc(examId);
@@ -122,3 +125,4 @@ export async function DeleteExamTable(examId: string,) {
     throw new Error("Failed to update exam status");
   }
 }
+

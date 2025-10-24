@@ -1,5 +1,6 @@
 "use client";
 
+import PdfDeletebtn from "@/app/(dashboard)/dashboardComponents/DeletePdfBtn";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/formatDate";
 import { Calendar, FileText, Link as LinkIcon } from "lucide-react";
@@ -8,8 +9,11 @@ import Link from "next/link";
 import { useState } from "react";
 
 interface PdfWithStringDate {
+  id: string;
+  driveId?: string;
   name: string;
   link: string;
+  addedBy?: string;
   year: string;
   createdAt: string; // string date
 }
@@ -22,7 +26,7 @@ const years = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
 
 export default function PdfList({ pdfs }: Props) {
   const [selectedYear, setSelectedYear] = useState<string>("1st Year");
-
+  
   const filteredPdfs = pdfs.filter((pdf) => pdf.year === selectedYear);
 
   return (
@@ -51,7 +55,7 @@ export default function PdfList({ pdfs }: Props) {
           {filteredPdfs.map((pdf) => (
             <li
               key={pdf.name}
-              className="flex justify-between items-center p-4 border-b"
+              className="flex justify-between items-center p-3 border-b"
             >
               <div>
                 <h3 className="text-lg font-semibold flex items-center  text-primary">
@@ -71,7 +75,8 @@ export default function PdfList({ pdfs }: Props) {
                   <Calendar size={16} /> Uploaded: {formatDate(pdf.createdAt)}
                 </p>
               </div>
-
+            
+            <div className=" flex flex-col gap-3 ">
               <Button
                 asChild
                 className="bg-orange-100 text-orange-500 hover:bg-orange-200"
@@ -85,6 +90,9 @@ export default function PdfList({ pdfs }: Props) {
                   <LinkIcon size={16} /> View
                 </Link>
               </Button>
+              <PdfDeletebtn id={pdf.id}/>
+            </div>
+              
             </li>
           ))}
         </ul>

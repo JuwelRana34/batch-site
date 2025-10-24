@@ -30,6 +30,8 @@ export interface Pdf {
   link: string;          // Google Drive or file link
   year: string;          // e.g., "1st Year"
   createdAt: Timestamp;  // Firestore timestamp
+  addedBy?: string;       // UID of the user who added the PDF
+  driveId?: string;    // Google Drive file ID
 }
 
 export interface ExamDate {
