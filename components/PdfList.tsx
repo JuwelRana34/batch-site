@@ -3,10 +3,11 @@
 import PdfDeletebtn from "@/app/(dashboard)/dashboardComponents/DeletePdfBtn";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/formatDate";
-import { Calendar, FileText, Link as LinkIcon } from "lucide-react";
+import { Calendar, FileText, Link as LinkIcon, UserCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { Badge } from "./ui/badge";
 
 interface PdfWithStringDate {
   id: string;
@@ -20,13 +21,14 @@ interface PdfWithStringDate {
 
 interface Props {
   pdfs: PdfWithStringDate[];
+  isAdmin: boolean;
 }
 
 const years = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
 
-export default function PdfList({ pdfs }: Props) {
+export default function PdfList({ pdfs, isAdmin }: Props) {
   const [selectedYear, setSelectedYear] = useState<string>("1st Year");
-  
+
   const filteredPdfs = pdfs.filter((pdf) => pdf.year === selectedYear);
 
   return (
@@ -58,8 +60,8 @@ export default function PdfList({ pdfs }: Props) {
               className="flex justify-between items-center p-3 border-b"
             >
               <div>
-                <h3 className="text-lg font-semibold flex items-center  text-primary">
-                  {/* <FileText size={18} /> {pdf.name} */}
+                <h3 className="text-lg font-semibold flex items-center gap-1  text-primary">
+                 
                   <Image
                     src={
                       "https://cdn-icons-png.flaticon.com/128/4726/4726010.png"
@@ -71,28 +73,37 @@ export default function PdfList({ pdfs }: Props) {
                   />
                   {pdf.name}
                 </h3>
-                <p className="text-gray-500 text-sm flex items-center gap-2 mt-1 pl-1">
-                  <Calendar size={16} /> Uploaded: {formatDate(pdf.createdAt)}
-                </p>
+                <div className="md:flex gap-2">
+                  <p className="text-gray-500 text-sm flex items-center gap-2 mt-1 pl-1">
+                    <Calendar size={16} /> Uploaded:{" "}
+                    {formatDate(pdf?.createdAt)}
+                  </p>
+                  <Badge
+                    variant={"green"}
+                    className="text-textColor  items-center my-2 md:my-0 gap-2 pl-0.5 inline"
+                  >
+                    <UserCircle className="inline w-8 h-8 text-gray-600" />{" "}
+                    AddedBy: {pdf?.addedBy || "Admin"}{" "}
+                  </Badge>
+                </div>
               </div>
-            
-            <div className=" flex flex-col gap-3 ">
-              <Button
-                asChild
-                className="bg-orange-100 text-orange-500 hover:bg-orange-200"
-              >
-                <Link
-                  href={pdf.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2"
+
+              <div className=" flex flex-col gap-3 ">
+                <Button
+                  asChild
+                  className="bg-orange-100 text-orange-500 hover:bg-orange-200"
                 >
-                  <LinkIcon size={16} /> View
-                </Link>
-              </Button>
-              <PdfDeletebtn id={pdf.id}/>
-            </div>
-              
+                  <Link
+                    href={pdf.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2"
+                  >
+                    <LinkIcon size={16} /> View
+                  </Link>
+                </Button>
+                {isAdmin && <PdfDeletebtn id={pdf.id} />}
+              </div>
             </li>
           ))}
         </ul>

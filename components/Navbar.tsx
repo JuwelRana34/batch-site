@@ -17,7 +17,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useAuth } from "@/context/AuthContext";
-import { Menu} from "lucide-react";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -66,7 +66,7 @@ export default function Navbar() {
               <DropdownMenuTrigger asChild>
                 <Button variant="outline">
                   <span className="text-md font-semibold bg-clip-text bg-linear-to-l from-blue-500 to-violet-500 text-transparent">
-                  {user.displayName}
+                    {user.displayName}
                   </span>
                 </Button>
               </DropdownMenuTrigger>
@@ -74,6 +74,9 @@ export default function Navbar() {
                 <DropdownMenuLabel>Manage Account</DropdownMenuLabel>
                 <DropdownMenuGroup>
                   <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <LogoutButton />
+                  </DropdownMenuItem>
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>

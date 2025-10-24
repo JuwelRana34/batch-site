@@ -14,23 +14,25 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function PdfDeleteBtn({id}:{id:string} ) {
   const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
-
+  const router = useRouter();
   const handleDelete = () => {
     startTransition(async () => {
       try {
         const res = await fetch("/api/pdf", {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(id),
+          body: JSON.stringify({id}),
         });
 
         const data = await res.json();
 
         if (data.success) {
+          router.refresh();
           toast.success("PDF deleted successfully");
         } else {
           toast.error("Failed to delete PDF");

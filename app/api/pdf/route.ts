@@ -139,7 +139,6 @@ export async function DELETE(req: Request) {
   
   try {
     const { id } = await req.json(); // Firestore document ID
-    console.log('id:', id);
     if (!id) return NextResponse.json({ error: "No document ID provided" }, { status: 400 });
 
     // Get document from Firestore
