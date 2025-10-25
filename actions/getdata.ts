@@ -55,7 +55,7 @@ export async function saveExamDate(examDate:{name:string,date:Date,createdAt:Dat
     await docRef.set(examDate);
     
     // REVIEW: revalidate the path where exam dates are displayed
-     revalidatePath("/");
+     revalidatePath("/dashboard/users");
     return { success: true, message: "Exam date saved successfully" };
   } catch (err) {
     console.error("Error saving exam date:", err);

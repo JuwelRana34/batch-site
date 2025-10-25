@@ -1,6 +1,5 @@
 "use client";
 
-import PdfDeletebtn from "@/app/(dashboard)/dashboardComponents/DeletePdfBtn";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/formatDate";
 import { Calendar, FileText, Link as LinkIcon, UserCircle } from "lucide-react";
@@ -21,12 +20,11 @@ interface PdfWithStringDate {
 
 interface Props {
   pdfs: PdfWithStringDate[];
-  isAdmin: boolean;
 }
 
 const years = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
 
-export default function PdfList({ pdfs, isAdmin }: Props) {
+export default function PdfList({ pdfs }: Props) {
   const [selectedYear, setSelectedYear] = useState<string>("1st Year");
 
   const filteredPdfs = pdfs.filter((pdf) => pdf.year === selectedYear);
@@ -61,7 +59,6 @@ export default function PdfList({ pdfs, isAdmin }: Props) {
             >
               <div>
                 <h3 className="text-lg font-semibold flex items-center gap-1  text-primary">
-                 
                   <Image
                     src={
                       "https://cdn-icons-png.flaticon.com/128/4726/4726010.png"
@@ -102,7 +99,6 @@ export default function PdfList({ pdfs, isAdmin }: Props) {
                     <LinkIcon size={16} /> View
                   </Link>
                 </Button>
-                {isAdmin && <PdfDeletebtn id={pdf.id} />}
               </div>
             </li>
           ))}

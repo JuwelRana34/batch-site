@@ -1,9 +1,10 @@
 import { fetchData } from "@/actions/getdata";
 import { formatDate } from "@/lib/formatDate";
 import { ExamDate, ExamTable } from "@/types/allTypes";
-import { ExamToggle } from "../../dashboardComponents/ExamToggle";
 import Countdown from "../../dashboardComponents/CountDown";
+import { ExamToggle } from "../../dashboardComponents/ExamToggle";
 
+export const revalidate = 345600; // disable caching
 export default async function page() {
   const examDate = await fetchData<ExamDate>("exams");
   const examList = await fetchData<ExamTable>("examTables");
@@ -11,15 +12,17 @@ export default async function page() {
   return (
     <div className="h-screen">
       users manage page
-      {examDate.map((d) =>{ 
+      {examDate.map((d) => {
         const examDateISO = d.date.toDate
-    ? d.date.toDate().toISOString()
-    : new Date(d.date.seconds * 1000).toISOString();
-       return <div key={d.date.toString()}>
-          {formatDate(d.date)} <br />
-          {d.name}
-          <Countdown date={examDateISO} examName={d.name}/>
-        </div>
+          ? d.date.toDate().toISOString()
+          : new Date(d.date.seconds * 1000).toISOString();
+        return (
+          <div key={d.date.toString()}>
+            {formatDate(d.date)} <br />
+            {d.name}
+            <Countdown date={examDateISO} examName={d.name} />
+          </div>
+        );
       })}
       {examList.length > 0 &&
         examList.map((exam) => (
@@ -51,25 +54,35 @@ export default async function page() {
                 </thead>
 
                 <tbody>
-                  {exam?.exams?.map((ex, i) => (
-                    <tr
-                      key={i}
-                      className={`border-b hover:bg-blue-50 ${
-                        i % 2 === 0 ? "bg-white" : "bg-gray-50"
-                      }`}
-                    >
-                      <td className="px-6 py-3 font-medium">{ex.course}</td>
-                      <td className="px-6 py-3">{ex.date}</td>
-                      <td className="px-6 py-3">
-                        {new Date(
-                          `1970-01-01T${ex.time}:00`
-                        ).toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </td>
-                    </tr>
-                  ))}
+                  {exam?.exams?.map((ex, i) => {
+                    // Convert exam.date to Date object
+                    const examDate = new Date(ex.date);
+                    const isPast = examDate < new Date();
+
+                    return (
+                      <tr
+                        key={i}
+                        className={`border-b hover:bg-blue-50 ${
+                          isPast
+                            ? "bg-red-100 text-red-600"
+                            : i % 2 === 0
+                            ? "bg-white"
+                            : "bg-gray-50"
+                        }`}
+                      >
+                        <td className="px-6 py-3 font-medium">{ex.course}</td>
+                        <td className="px-6 py-3">{ex.date}</td>
+                        <td className="px-6 py-3">
+                          {new Date(
+                            `1970-01-01T${ex.time}:00`
+                          ).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
