@@ -100,7 +100,7 @@ export async function POST(req: Request) {
     });
 
     revalidatePath("/qustions");
-
+    revalidatePath("/dashboard/upload-pdfs");
     return NextResponse.json({
       success: true,
       id: docRef.id,
@@ -165,6 +165,7 @@ export async function DELETE(req: Request) {
     await db.collection("pdfs").doc(id).delete();
 
     revalidatePath("/qustions");
+    revalidatePath("/dashboard/upload-pdfs");
     return NextResponse.json({
       success: true,
       message: "File deleted from Drive and Firestore",
