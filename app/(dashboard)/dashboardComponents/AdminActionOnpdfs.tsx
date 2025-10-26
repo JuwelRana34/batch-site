@@ -3,46 +3,31 @@
 import { Calendar, FileText, LinkIcon, UserCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { db } from "@/lib/firebase";
 import { formatDate } from "@/lib/formatDate";
-import { Pdf } from "@/types/allTypes";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import PdfDeleteBtn from "./DeletePdfBtn";
 
-export default function AdminActionOnPdfs() {
-  const [pdfs, setPdfs] = useState<Pdf[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedYear, setSelectedYear] = useState("1st Year");
+interface PdfWithStringDate {
+  id: string;
+  driveId?: string;
+  name: string;
+  link: string;
+  addedBy?: string;
+  year: string;
+  createdAt: string; // string date
+}
 
+interface Props {
+  pdfs: PdfWithStringDate[];
+}
+export default function AdminActionOnPdfs({pdfs}: Props) {
+  const [selectedYear, setSelectedYear] = useState("1st Year");
   const years = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
 
-  useEffect(() => {
-    const q = query(collection(db, "pdfs"), orderBy("createdAt", "desc"));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const pdfList = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-        createdAt: doc.data().createdAt?.toDate?.()?.toISOString?.() || "",
-      })) as Pdf[];
-      setPdfs(pdfList);
-      setLoading(false);
-    });
-    return () => unsubscribe();
-  }, []);
-
   const filteredPdfs = pdfs.filter((pdf) => pdf.year === selectedYear);
-
-  if (loading) {
-    return (
-      <div className="text-center mt-20 text-gray-600 animate-pulse">
-        Loading PDFs...
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen py-12 px-4 md:px-20 max-w-5xl mx-auto">

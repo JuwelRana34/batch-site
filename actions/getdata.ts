@@ -37,7 +37,7 @@ export async function saveExamDate(examDate:{name:string,date:Date,createdAt:Dat
   }
 
   // 🔹 Firebase Admin দিয়ে session verify করুন
-  // const decodedClaims = await firebaseAdmin.auth().verifyIdToken(session, true);
+
   const decodedClaims = await getAuth().verifySessionCookie(session, true);
 
   // 🔹 শুধু admin role আছে কিনা চেক করুন

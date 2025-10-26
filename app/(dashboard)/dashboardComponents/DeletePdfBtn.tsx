@@ -1,23 +1,22 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogFooter,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogCancel,
   AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
+import { toast } from "sonner";
 
-export default function PdfDeleteBtn({id}:{id:string} ) {
-
+export default function PdfDeleteBtn({ id }: { id: string }) {
   const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -27,7 +26,7 @@ export default function PdfDeleteBtn({id}:{id:string} ) {
         const res = await fetch("/api/pdf", {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({id}),
+          body: JSON.stringify({ id }),
         });
 
         const data = await res.json();
@@ -50,13 +49,17 @@ export default function PdfDeleteBtn({id}:{id:string} ) {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">Delete</Button>
+        <Button variant="destructive">
+          {" "}
+          {isPending ? "Deleting.." : "Delete"}{" "}
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action will permanently delete the PDF from the Database. You can’t undo this action.
+            This action will permanently delete the PDF from the Database. You
+            can’t undo this action.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

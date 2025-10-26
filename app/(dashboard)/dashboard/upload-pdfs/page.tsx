@@ -1,29 +1,20 @@
-import { getAuth } from "firebase-admin/auth";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import PdfUploader from "../../dashboardComponents/PdfUplodader";
+import { fetchData } from "@/actions/getdata";
 import AdminActionOnPdfs from "../../dashboardComponents/AdminActionOnpdfs";
+import PdfUploader from "../../dashboardComponents/PdfUplodader";
+import { Pdf } from "@/types/allTypes";
 
+export const revalidate = 345600; // 4 days
 
 export default async function UploadPage() {
-  const CookieStore = await cookies();
-  const Session = CookieStore.get("session")?.value;
-
-  if (!Session) {
-    throw new Error("No session cookie found");
-  }
-  // 🔹 Firebase Admin দিয়ে session verify করুন
-  const decodedClaims = await getAuth().verifySessionCookie(Session, true);
-  // 🔹 শুধু admin role আছে কিনা চেক করুন
-  const isAdmin = decodedClaims.admin || decodedClaims.moderator;
-
-  if (!isAdmin) {
-    redirect("/");
-  }
+    const rawpdfs = await fetchData<Pdf>("pdfs");
+    const pdfs = rawpdfs.map((pdf) => ({
+      ...pdf,
+      createdAt: pdf.createdAt.toDate().toISOString(),
+    }));
   return (
     <>
       <PdfUploader />
-      <AdminActionOnPdfs />
+      <AdminActionOnPdfs pdfs={pdfs} />
     </>
   );
 }
