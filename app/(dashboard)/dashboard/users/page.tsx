@@ -20,7 +20,7 @@ export default async function page() {
           <div key={d.date.toString()}>
             {formatDate(d.date)} <br />
             {d.name}
-            <Countdown date={examDateISO} examName={d.name} />
+            <Countdown reslut={d.reslut} date={examDateISO} examName={d.name} />
           </div>
         );
       })}

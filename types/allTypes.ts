@@ -37,6 +37,7 @@ export interface Pdf {
 export interface ExamDate {
   id: string;
   name: string;
+  reslut: string;
   date:Timestamp;
   showCountdown: boolean;
   createdAt: Timestamp;

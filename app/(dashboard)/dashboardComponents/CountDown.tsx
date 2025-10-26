@@ -7,9 +7,11 @@ import { useEffect, useState } from "react";
 export default function Countdown({
   date,
   examName,
+  reslut,
 }: {
   date: string;
   examName: string;
+  reslut: string;
 }) {
   const [digitSize, setDigitSize] = useState({
     width: 50,
@@ -65,7 +67,7 @@ export default function Countdown({
           dividerStyle={{ color: "#4B5563", height: 1 }}
           duration={0.6}
         >
-          <h1 className=" capitalize text-rose-400 font-semibold text-4xl">{examName} পরিক্ষা শুরু হয়েছে। </h1>
+          <h1 className=" capitalize text-rose-400 font-semibold text-4xl">{reslut }</h1>
         </FlipClockCountdown>
       </div>
     </div>

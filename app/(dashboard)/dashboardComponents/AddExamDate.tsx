@@ -15,12 +15,14 @@ export default function AddExamDate() {
   const [showCountdown, setShowCountdown] = useState(true);
   const [isPending, startTransition] = useTransition();
   const [name, setName] = useState<string>("");
+  const [reslut, setReslut] = useState<string>("");
   const handleSubmit = async () => {
     if (!date) return toast.error("Please select a date");
 
     startTransition(async () => {
       try {
         const res = await saveExamDate({
+          reslut,
           name,
           date, // JS Date → Timestamp
           showCountdown,
@@ -53,12 +55,20 @@ export default function AddExamDate() {
           </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col ">
             <Label htmlFor="exam-date"> Exam Name</Label>
             <Input
               className="border m-2 rounded-md"
               placeholder="Exam Name"
               onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-col ">
+            <Label htmlFor="exam-date">Reslut</Label>
+            <Input
+              className="border m-2 rounded-md"
+              placeholder="Reslut"
+              onChange={(e) => setReslut(e.target.value)}
             />
           </div>
           <div className="flex flex-col items-center">
