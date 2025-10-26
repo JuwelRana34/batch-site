@@ -71,6 +71,7 @@ export async function saveExamDate(examDate: {
 
     // REVIEW: revalidate the path where exam dates are displayed
     revalidatePath("/dashboard/users");
+    revalidatePath("/dashboard/add-examDate");
     return { success: true, message: "Exam date saved successfully" };
   } catch (err) {
     console.error("Error saving exam date:", err);
