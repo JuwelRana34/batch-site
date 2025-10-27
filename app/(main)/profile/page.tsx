@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/context/AuthContext";
 import { Edit, Facebook, Mail, Phone, ShieldUser } from "lucide-react";
+
 export default function UserProfile() {
   const { user } = useAuth();
   return (
@@ -18,7 +19,7 @@ export default function UserProfile() {
           {/* All content above overlay */}
           <div className="relative z-10 flex flex-col items-center">
             <div className="relative">
-              <Avatar className="w-28 h-28 border-4 border-emerald-100 shadow">
+              <Avatar className=" w-20 h-20  md:w-28  md:h-28 border-4 border-emerald-100 shadow">
                 <AvatarImage
                   src={user?.photoURL || ""}
                   alt={user?.displayName || ""}
@@ -28,7 +29,7 @@ export default function UserProfile() {
                   {user?.displayName?.[0] || "U"}
                 </AvatarFallback>
               </Avatar>
-              <span className="absolute bottom-1 right-1 bg-orange-100 p-1 rounded-full text-orange-500">
+              <span className="absolute -bottom-1 md:bottom-1 right-1 bg-orange-100 p-1 rounded-full text-orange-500">
                 <ShieldUser />
               </span>
             </div>
@@ -50,7 +51,7 @@ export default function UserProfile() {
           </div>
         </CardHeader>
 
-        <Separator className="my-4" />
+        <Separator className="my-1" />
 
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

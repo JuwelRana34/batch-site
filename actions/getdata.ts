@@ -154,3 +154,5 @@ export async function DeleteExamTable(examId: string) {
     throw new Error("Failed to update exam status");
   }
 }
+
+

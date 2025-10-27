@@ -46,8 +46,8 @@ export default function DashboardNav() {
       href: "/dashboard/upload-photos",
     },
     {
-      name: "Upload-vides",
-      href: "/dashboard/upload-vides",
+      name: "Upload-videos",
+      href: "/dashboard/upload-videos",
     },
     {
       name: "Add-ExamDate",
@@ -56,6 +56,10 @@ export default function DashboardNav() {
     {
       name: "Add-ExamTable",
       href: "/dashboard/add-examTable",
+    },
+    {
+      name: "Class routine",
+      href: "/dashboard/classRoutineUpload",
     },
   ];
   const [open, setOpen] = useState(false);

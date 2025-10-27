@@ -36,8 +36,8 @@ export default function DashboardLayout({
       href: "/dashboard/upload-photos",
     },
     {
-      name: "Upload-vides",
-      href: "/dashboard/upload-vides",
+      name: "Upload-videos",
+      href: "/dashboard/upload-videos",
     },
     {
       name: "Add-ExamDate",
@@ -46,6 +46,10 @@ export default function DashboardLayout({
     {
       name: "Add-ExamTable",
       href: "/dashboard/add-examTable",
+    },
+    {
+      name: "Class routine",
+      href: "/dashboard/classRoutineUpload",
     },
   ];
 
