@@ -1,6 +1,7 @@
 import { ArrowBigLeftIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import DashboardNav from "./dashboardComponents/DashboardNav";
 import NavLink from "./dashboardComponents/NavLink";
 
 export const metadata: Metadata = {
@@ -69,7 +70,12 @@ export default function DashboardLayout({
           </Link>
         </div>
       </div>
-      <div className=" px-2 md:w-[85%] bg-white overflow-hidden overflow-y-scroll ">
+
+      <div className=" md:hidden">
+        <DashboardNav />
+      </div>
+
+      <div className=" mt-14 md:mt-0 px-2 md:w-[85%] bg-white overflow-hidden overflow-y-scroll ">
         {children}
       </div>
     </div>

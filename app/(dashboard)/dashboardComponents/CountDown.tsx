@@ -62,7 +62,7 @@ export default function Countdown({
             height: digitSize.height,
             fontSize: digitSize.fontSize,
             fontWeight: "bold",
-            borderRadius: 8,
+            borderRadius: 5,
           }}
           dividerStyle={{ color: "#4B5563", height: 1 }}
           duration={0.6}

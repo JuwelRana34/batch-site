@@ -34,6 +34,7 @@ export default function Navbar() {
     { href: "/qustions", label: "Qustions" },
     { href: "/profile", label: "Profile" },
     { href: "/contact", label: "Contact" },
+    { href: "/dashboard", label: "Dashboard" },
   ];
 
   return (

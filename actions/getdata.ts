@@ -114,6 +114,7 @@ export async function saveExamTable(examDate: {
 
     // REVIEW: revalidate the path where exam dates are displayed
     revalidatePath("/");
+    revalidatePath("/dashboard/add-examTable");
     return { success: true, message: "Exam Name saved successfully" };
   } catch (err) {
     console.error("Error saving exam date:", err);
