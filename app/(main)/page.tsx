@@ -1,19 +1,33 @@
-"use client";
+import { fetchData } from "@/actions/getdata";
+import Carousel from "@/components/Carousel";
+import { slides } from "@/Data/data";
+import { ExamDate } from "@/types/allTypes";
+import Countdown from "../(dashboard)/dashboardComponents/CountDown";
+import ExamRoutine from "./Components/ExamRoutine";
 
-import LogoutButton from "@/components/LogoutButton";
-import { useAuth } from "@/context/AuthContext";
-import Link from "next/link";
+export const revalidate = 345600;
 
-export default function Home() {
-  const { user, loading, isAdmin, isModerator } = useAuth();
-  if (loading) return <p>Loading...</p>;
+export default async function Home() {
+  const examDate = await fetchData<ExamDate>("exams");
 
   return (
     <div className="min-h-screen">
-      {user && isAdmin ? <p>Welcome, Admin!</p> : <p>Normal User</p>}
-      {user && isModerator ? <p>Welcome, Moderator!</p> : <p>Normal User</p>}
+      <Carousel images={slides} />
 
-      {user ? <LogoutButton /> : <Link href={"/login"}>login</Link>}
+      {/* //manage exam Count down */}
+      {examDate.map((d) => {
+        const examDateISO = d.date.toDate
+          ? d.date.toDate().toISOString()
+          : new Date(d.date.seconds * 1000).toISOString();
+        return (
+          <div key={d.date.toString()}>
+            <Countdown reslut={d.reslut} date={examDateISO} examName={d.name} />
+          </div>
+        );
+      })}
+
+      {/* mange exam routine  */}
+      <ExamRoutine />
     </div>
   );
 }

@@ -44,9 +44,9 @@ export default function Countdown({
 
       {/* Countdown Body */}
       <div className="p-6 flex flex-col items-center justify-center  ">
-        <h3 className="text-gray-700 font-medium mb-4 text-sm tracking-wide uppercase">
+       { new Date(date) < new Date() ? "" : <h3 className="text-gray-700 font-medium mb-4 text-sm tracking-wide uppercase">
           Time Remaining
-        </h3>
+        </h3>} 
 
         <FlipClockCountdown
           to={new Date(date).getTime()}
@@ -67,7 +67,7 @@ export default function Countdown({
           dividerStyle={{ color: "#4B5563", height: 1 }}
           duration={0.6}
         >
-          <h1 className=" capitalize text-rose-400 font-semibold text-4xl">{reslut }</h1>
+          <h1 className=" capitalize text-rose-400 font-semibold text-3xl  md:text-4xl">{reslut }</h1>
         </FlipClockCountdown>
       </div>
     </div>

@@ -70,7 +70,7 @@ export async function saveExamDate(examDate: {
     await docRef.set(examDate);
 
     // REVIEW: revalidate the path where exam dates are displayed
-    revalidatePath("/dashboard/users");
+    revalidatePath("/");
     revalidatePath("/dashboard/add-examDate");
     return { success: true, message: "Exam date saved successfully" };
   } catch (err) {
@@ -87,7 +87,7 @@ export async function DeleteExamDate(id: string) {
   try {
     await db.collection("exams").doc(id).delete();
 
-    revalidatePath("/dashboard/users");
+    revalidatePath("/");
     revalidatePath("/dashboard/add-examDate");
     return { success: true, message: "Exam date Deleted successfully" };
   } catch (err) {
@@ -130,6 +130,7 @@ export async function updateExamStatus(examId: string, isActive: boolean) {
     const ref = db.collection("examTables").doc(examId);
     await ref.update({ isCompleted: isActive });
     revalidatePath("/dashboard/add-examTable");
+    revalidatePath("/");
     console.log(`Exam ${examId} updated to: ${isActive}`);
   } catch (error) {
     console.error("Error updating exam status:", error);
@@ -144,8 +145,8 @@ export async function DeleteExamTable(examId: string) {
 
   try {
     await db.collection("examTables").doc(examId).delete();
-    revalidatePath("/dashboard/add-examTable");
     revalidatePath("/");
+    revalidatePath("/dashboard/add-examTable");
 
     return { success: true, message: "Exam Table Deleted successfully" };
   } catch (error) {

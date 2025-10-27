@@ -1,3 +1,6 @@
+
+
+
 export const locations = [
   "Dhaka", "Faridpur", "Gazipur", "Gopalganj", "Jamalpur", "Kishoreganj",
   "Madaripur", "Manikganj", "Munshiganj", "Mymensingh", "Narayanganj",
@@ -6,3 +9,10 @@ export const locations = [
 ];
 
 export const batches = ["17th","18th", "19th","20th"];
+
+
+export const slides = [
+    { src: "jnu.jpg", alt: "Mountain view" },
+    { src: "bg.jpg", alt: "Sunset" },
+  
+  ];

@@ -35,7 +35,7 @@ export default async function Page() {
   const notices = await fetchData<Notice>("notices");
 
   return (
-    <div className="h-screen  py-12 px-4 md:px-20 max-w-7xl mx-auto">
+    <div className="min-h-screen  py-12 px-4 md:px-20 max-w-7xl mx-auto">
       <h1 className=" text-4xl font-bold mb-10 text-center text-textColor">
         Official Notices
       </h1>
