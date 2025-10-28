@@ -159,13 +159,15 @@ export default function Carousel({
         {images.map((img, i) => (
           <div
             key={i}
-            className="flex-shrink-0 w-full h-[50vh] md:h-[80vh] flex items-center justify-center"
+            className="flex-shrink-0 w-full h-full md:h-[80vh] flex items-center justify-center"
           >
             <Image
               src={img.src}
               alt={img.alt || ""}
               className="object-cover w-full  "
               onLoad={() => setTransition(true)}
+              height={1000}
+              width={1000}
             />
           </div>
         ))}
@@ -192,7 +194,7 @@ export default function Carousel({
       </Button>
 
       {/* Dots */}
-      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+      <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-2">
         {images.map((_, i) => (
           <button
             key={i}

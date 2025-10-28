@@ -29,25 +29,21 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-    // 🔹 Default links (for all users)
+  // 🔹 Default links (for all users)
   const commonLinks = [
     { href: "/", label: "Home" },
     { href: "/notice", label: "Notices" },
-    { href: "/questions", label: "Questions" },
+    { href: "/qustions", label: "Questions" },
     { href: "/photos", label: "Photos" },
   ];
 
   // 🔹 Admin & modaretor-only links
-  const adminLinks = [
-    { href: "/dashboard", label: "Admin Dashboard" },
-  ];
-
-
+  const adminLinks = [{ href: "/dashboard", label: "Admin Dashboard" }];
 
   // 🔹 Final combined links based on role
   let links = [...commonLinks];
   if (isAdmin || isModerator) links = [...links, ...adminLinks];
-  else if (user) links.push({ href: "/profile", label: "Profile" });
+  // else if (user) links.push({ href: "/profile", label: "Profile" });
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-white/50 backdrop-blur-sm shadow-sm border-b z-50">
@@ -86,7 +82,9 @@ export default function Navbar() {
               <DropdownMenuContent className="w-56" align="start">
                 <DropdownMenuLabel>Manage Account</DropdownMenuLabel>
                 <DropdownMenuGroup>
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href={"/profile"}> Profile</Link>
+                  </DropdownMenuItem>
                   <DropdownMenuItem>
                     <LogoutButton />
                   </DropdownMenuItem>
@@ -132,31 +130,33 @@ export default function Navbar() {
                 ))}
                 {loading ? (
                   <Skeleton className="h-6 w-14" />
-                ) : user ? (<>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="outline">
-                        {" "}
-                        <span className="text-md font-semibold bg-clip-text bg-linear-to-l from-blue-500 to-violet-500 text-transparent">
-                          {user.displayName}{" "}
-                        </span>{" "}
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56" align="start">
-                      <DropdownMenuLabel>Manage Account</DropdownMenuLabel>
-                      <DropdownMenuGroup>
-                        <DropdownMenuItem>Profile</DropdownMenuItem>
-                      </DropdownMenuGroup>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                  <LogoutButton />
+                ) : user ? (
+                  <>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline">
+                          {" "}
+                          <span className="text-md font-semibold bg-clip-text bg-linear-to-l from-blue-500 to-violet-500 text-transparent">
+                            {user.displayName}{" "}
+                          </span>{" "}
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-56" align="start">
+                        <DropdownMenuLabel>Manage Account</DropdownMenuLabel>
+                        <DropdownMenuGroup>
+                          <SheetClose asChild>
+                            <Link href={"/profile"}> Profile</Link>
+                          </SheetClose>
+                        </DropdownMenuGroup>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    <LogoutButton />
                   </>
                 ) : (
                   <Button asChild size="lg" className="ml-2">
                     <Link href={"/login"}>Login</Link>
                   </Button>
                 )}
-                
               </div>
             </SheetContent>
           </Sheet>

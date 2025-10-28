@@ -10,6 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/formatDate";
 import { Photos } from "@/types/allTypes";
 import Image from "next/image";
+import Link from "next/link";
 
 export const revalidate = 345600; // 4 days
 
@@ -48,7 +49,7 @@ export default async function Page() {
               </CardHeader>
 
               <CardContent className="p-4">
-                <h3 className="font-semibold text-lg text-gray-900 line-clamp-1">
+                <h3 className="font-semibold text-lg text-textColor capitalize line-clamp-5">
                   {photo.heading}
                 </h3>
                 <p className="text-sm text-gray-500 mt-1">
@@ -57,14 +58,14 @@ export default async function Page() {
               </CardContent>
 
               <CardFooter className="flex justify-end p-4 pt-0">
-                <a
+                <Link
                   href={photo.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 text-sm hover:underline"
                 >
                   View full image →
-                </a>
+                </Link>
               </CardFooter>
             </Card>
           ))}
