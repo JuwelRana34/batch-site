@@ -93,6 +93,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 interface CarouselProps {
@@ -144,7 +145,7 @@ export default function Carousel({
   }, [index, images.length]);
 
   return (
-    <div className={cn("relative w-full max-w-7xl mx-auto overflow-hidden rounded-lg group", className)}>
+    <div className={cn("relative w-full max-w-7xl mx-auto overflow-hidden rounded group", className)}>
       {/* Slides */}
       <div
         className={cn(
@@ -158,12 +159,12 @@ export default function Carousel({
         {images.map((img, i) => (
           <div
             key={i}
-            className="flex-shrink-0 w-full h-[50vh] md:h-[80vh] flex items-center justify-center bg-gray-100"
+            className="flex-shrink-0 w-full h-[50vh] md:h-[80vh] flex items-center justify-center"
           >
-            <img
+            <Image
               src={img.src}
               alt={img.alt || ""}
-              className="object-cover w-full  rounded-lg"
+              className="object-cover w-full  "
               onLoad={() => setTransition(true)}
             />
           </div>
@@ -175,7 +176,7 @@ export default function Carousel({
         size="icon"
         variant="secondary"
         onClick={prev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white/80 rounded-full backdrop-blur-sm ring-2 ring-emerald-400 opacity-0 group-hover:opacity-100 transition"
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/40 hover:bg-white/50 rounded-full backdrop-blur ring-2 ring-gray-400 opacity-0 group-hover:opacity-100 transition"
       >
         <ChevronLeft className="h-6 w-6 text-emerald-600" />
       </Button>
@@ -185,9 +186,9 @@ export default function Carousel({
         size="icon"
         variant="secondary"
         onClick={next}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white/80 rounded-full backdrop-blur-sm ring-2 ring-emerald-400 opacity-0 group-hover:opacity-100 transition"
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/40 hover:bg-white/50 rounded-full backdrop-blur ring-2 ring-gray-400 opacity-0 group-hover:opacity-100 transition"
       >
-        <ChevronRight className="h-6 w-6 text-emerald-600" />
+        <ChevronRight className="h-6 w-6 text-blue-600" />
       </Button>
 
       {/* Dots */}
@@ -199,7 +200,7 @@ export default function Carousel({
             className={cn(
               "rounded-full transition-all",
               i === index % images.length
-                ? "bg-emerald-500/80 w-2.5 h-2.5 ring-2 ring-emerald-300"
+                ? "bg-blue-500/50 w-2.5 h-2.5 ring ring-blue-300"
                 : "bg-gray-300 w-2 h-2"
             )}
           />

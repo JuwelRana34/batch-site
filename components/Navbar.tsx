@@ -28,14 +28,26 @@ export default function Navbar() {
   const { user, loading, isAdmin, isModerator } = useAuth();
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const links = [
+
+    // 🔹 Default links (for all users)
+  const commonLinks = [
     { href: "/", label: "Home" },
     { href: "/notice", label: "Notices" },
-    { href: "/qustions", label: "Qustions" },
-    { href: "/profile", label: "Profile" },
-    { href: "/contact", label: "Contact" },
-    { href: "/dashboard", label: "Dashboard" },
+    { href: "/questions", label: "Questions" },
+    { href: "/photos", label: "Photos" },
   ];
+
+  // 🔹 Admin & modaretor-only links
+  const adminLinks = [
+    { href: "/dashboard", label: "Admin Dashboard" },
+  ];
+
+
+
+  // 🔹 Final combined links based on role
+  let links = [...commonLinks];
+  if (isAdmin || isModerator) links = [...links, ...adminLinks];
+  else if (user) links.push({ href: "/profile", label: "Profile" });
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-white/50 backdrop-blur-sm shadow-sm border-b z-50">
@@ -120,7 +132,7 @@ export default function Navbar() {
                 ))}
                 {loading ? (
                   <Skeleton className="h-6 w-14" />
-                ) : user ? (
+                ) : user ? (<>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline">
@@ -137,12 +149,14 @@ export default function Navbar() {
                       </DropdownMenuGroup>
                     </DropdownMenuContent>
                   </DropdownMenu>
+                  <LogoutButton />
+                  </>
                 ) : (
                   <Button asChild size="lg" className="ml-2">
                     <Link href={"/login"}>Login</Link>
                   </Button>
                 )}
-                <LogoutButton />
+                
               </div>
             </SheetContent>
           </Sheet>

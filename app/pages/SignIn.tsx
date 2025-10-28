@@ -26,7 +26,7 @@ import { toast } from "sonner";
 export default function SignIn() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
   const [redirectToProfileSetup, setRedirectToProfileSetup] =
     useState<boolean>(false);
 
@@ -57,7 +57,6 @@ export default function SignIn() {
             body: JSON.stringify({ token }),
           });
 
-          setIsLoggedIn(true);
           setEmail("");
           setPassword("");
           toast.success("Login successful!");
@@ -109,7 +108,6 @@ export default function SignIn() {
             toast.success(`Welcome back ${user.displayName}!`);
           } else {
             toast.success(`Welcome ${user.displayName || "user"}!`);
-            setIsLoggedIn(true);
           }
         }
       } catch (error) {

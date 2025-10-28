@@ -26,7 +26,7 @@ export function ExamToggle({
         toast.success(
           `Exam marked as ${newStatus ? "active" : "inactive"} successfully!`
         );
-      } catch (error) {
+      } catch{
         toast.error("Failed to update exam status!");
         setIsActive(!newStatus); // rollback
       }

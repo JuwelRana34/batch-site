@@ -54,3 +54,13 @@ export interface ExamTable {
   }[];
   createdAt: Timestamp;
 }
+
+
+export interface Photos {
+  id:string;
+  heading: string;
+  timestamp: Date;
+  url: string;
+  publicId?:string;
+  createdAt:Timestamp;
+}

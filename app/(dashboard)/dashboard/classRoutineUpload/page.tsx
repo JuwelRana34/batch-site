@@ -12,7 +12,7 @@ export default function Page() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    // const formData = new FormData(e.currentTarget);
 
     setLoading(true);
     try {
