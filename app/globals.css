@@ -1,5 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "../styles/_variables.scss";
+@import "../styles/_keyframe-animations.scss";
+
 
 @custom-variant dark (&:is(.dark *));
 
@@ -131,4 +134,95 @@
 .acive {
   box-shadow: inset -7px -7px 15px rgba(255, 255, 255, 0.8),
     inset 7px 7px 15px rgba(163, 177, 198, 0.6);
+}
+
+
+/* tiptap */
+pre {
+  background: #142140;
+  color: #f1f5f9;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
+code {
+  background: #050d22;
+  color: #efefef;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-family: "Fira Code", monospace;
+}
+
+/* Basic text styles */
+.tiptap-content {
+  color: #1f2937; /* gray-800 */
+  line-height: 1.75;
+}
+
+/* Headings */
+.tiptap-content h1 { font-size: 1.875rem; font-weight: 700; margin-top: 1.25rem; margin-bottom: 0.5rem; }
+.tiptap-content h2 { font-size: 1.5rem; font-weight: 600; margin-top: 1.25rem; margin-bottom: 0.5rem; }
+.tiptap-content h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1rem; margin-bottom: 0.5rem; }
+.tiptap-content h4 { font-size: 1.125rem; font-weight: 500; margin-top: 0.75rem; margin-bottom: 0.5rem; }
+
+/* Paragraphs */
+.tiptap-content p { margin-bottom: 0.75rem; }
+
+/* Bold & underline */
+.tiptap-content strong { font-weight: 600; }
+.tiptap-content u { text-decoration: underline; }
+
+/* Highlights */
+.tiptap-content mark {
+   background-color: #fcd34d; 
+   color: inherit;
+   padding: 0 0.1rem; 
+  
+  }
+
+/* Ordered & unordered lists */
+.tiptap-content ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.tiptap-content ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.tiptap-content li p {
+  display: inline; /* Fix <p> inside <li> breaking numbers/bullets */
+  margin: 0;
+}
+
+/* Links */
+.tiptap-content a {
+  color: #3b82f6; /* sky-500 */
+  text-decoration: underline;
+}
+
+/* Code & Pre */
+.tiptap-content code {
+  background-color: #385287; /* gray-100 */
+  padding: 0.1rem 0.25rem;
+  border-radius: 0.25rem;
+  font-family: 'Fira Code', monospace;
+}
+.tiptap-content pre {
+  background-color: #0b2957; /* gray-800 */
+  color: #69727a; /* gray-100 */
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  font-family: 'Fira Code', monospace;
+  margin-bottom: 1rem;
+}
+
+/* Images */
+div[data-type="horizontalRule"] {
+  margin: 3px 0 !important;
 }

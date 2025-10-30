@@ -36,10 +36,10 @@ export default function Countdown({
   }, []);
 
   return (
-    <div className="max-w-xl mx-auto my-10  bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden transition hover:shadow-2xl">
+    <div className="max-w-xl mx-auto my-10  bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden transition ">
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 text-center">
-        <h2 className="text-xl font-semibold tracking-wide">{examName}</h2>
+        <h2 className="text-xl font-semibold tracking-wide capitalize">{examName}</h2>
       </div>
 
       {/* Countdown Body */}
@@ -67,7 +67,7 @@ export default function Countdown({
           dividerStyle={{ color: "#4B5563", height: 1 }}
           duration={0.6}
         >
-          <h1 className=" capitalize text-rose-400 font-semibold text-3xl  md:text-4xl">{reslut }</h1>
+          <h1 className=" animate-pulse capitalize text-rose-400 font-semibold text-3xl  md:text-4xl">{reslut }</h1>
         </FlipClockCountdown>
       </div>
     </div>

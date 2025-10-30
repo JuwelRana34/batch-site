@@ -88,8 +88,8 @@ export default async function Page() {
                 </span>
                 <span className="rounded-full flex justify-center items-center gap-1 font-medium p-2">
                   {" "}
-                  <Calendar className="inline" size={20} />{" "}
-                  {formatDate(post?.createdAt)}
+                  {/* <Calendar className="inline" size={20} />{" "}
+                  {formatDate(post?.createdAt)} */}
                 </span>
               </div>
               <div className="flex justify-center md:justify-start flex-wrap  gap-3 md:gap-5 items-center text-gray-500 text-xs border-gray-200 pt-2">
@@ -100,9 +100,11 @@ export default async function Page() {
                 {/* <Badge variant={"violet"} className="rounded-full p-2">Author: {"Admin"}</Badge> */}
                 <Badge variant={"orange"} className="rounded-full p-2">
                   {" "}
-                  <Calendar className="inline" size={100} />{" "}
+                  <Calendar className="inline" size={100} />
                   {formatDate(post?.createdAt)}
                 </Badge>
+
+
                 {/* Read More Modal */}
                 <Dialog>
                   <DialogTrigger asChild>
@@ -117,10 +119,13 @@ export default async function Page() {
                       </DialogTitle>
                     </DialogHeader>
                     <DialogDescription className="mt-2 text-gray-700">
-                      {post?.text}
+                      <div
+                  className="tiptap-content mb-3"
+                  dangerouslySetInnerHTML={{ __html: post?.text }}
+                ></div>
                     </DialogDescription>
                     <div className="mt-4 flex justify-between text-gray-500 text-xs">
-                      <span>Author: {"post?.authorId"}</span>
+                      <span>Posted By: {post?.authorName}</span>
                       <span>{formatDate(post?.createdAt)}</span>
                     </div>
                     <DialogClose asChild>

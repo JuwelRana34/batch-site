@@ -156,3 +156,29 @@ export async function DeleteExamTable(examId: string) {
 }
 
 
+export async function AddNotice(Notice: {
+  title: string;
+  text: string;
+  authorName:string;
+  createdAt: Date;
+  isPublished:boolean;
+}) {
+  if (!Notice.title) throw new Error("notice Title is required");
+  const { success, message } = await verifyAdminSession();
+  if (!success) return { success, message };
+
+  try {
+    const docRef = db.collection("notices").doc();
+
+    // setDoc will create if not exists, overwrite if exists
+    await docRef.set(Notice);
+
+    // REVIEW: revalidate the path where exam dates are displayed
+    revalidatePath("/notice");
+    revalidatePath("/dashboard/notice");
+    return { success: true, message: "Notice saved successfully" };
+  } catch (err) {
+    console.error("Error saving Notice:", err);
+    return { success: false, message: "Failed to save Notice" };
+  }
+}
