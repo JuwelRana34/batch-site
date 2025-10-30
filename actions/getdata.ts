@@ -182,3 +182,21 @@ export async function AddNotice(Notice: {
     return { success: false, message: "Failed to save Notice" };
   }
 }
+
+
+export async function DeleteNotice(id:string) {
+  if (!id) throw new Error("notice id is required");
+  const { success, message } = await verifyAdminSession();
+  if (!success) return { success, message };
+
+ try {
+    await db.collection("notices").doc(id).delete();
+    revalidatePath("/notice");
+    revalidatePath("/dashboard/notice");
+
+    return { success: true, message: "notice Deleted successfully" };
+  } catch (error) {
+    return { success: false, message: "Failed to Delete Notice!" };
+    throw new Error("Failed to delete notices");
+  }
+}

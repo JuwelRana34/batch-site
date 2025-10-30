@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/context/AuthContext";
-import { Edit, Facebook, Mail, Phone, ShieldUser } from "lucide-react";
+import { Edit, Facebook, Mail, Phone, ShieldHalf, ShieldUser } from "lucide-react";
 
 export default function UserProfile() {
-  const { user } = useAuth();
+  const {user, loading, isAdmin, isModerator } = useAuth();
+
+  if(loading) return <p>loading...</p>
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-10 px-4 flex justify-center">
       <Card className="w-full max-w-3xl shadow-lg rounded-2xl border border-gray-100">
@@ -29,9 +31,12 @@ export default function UserProfile() {
                   {user?.displayName?.[0] || "U"}
                 </AvatarFallback>
               </Avatar>
-              <span className="absolute -bottom-1 md:bottom-1 right-1 bg-orange-100 p-1 rounded-full text-orange-500">
-                <ShieldUser />
-              </span>
+           {isAdmin?<span className="absolute -bottom-1 md:bottom-1 right-1 bg-orange-100 p-1 rounded-full text-orange-500">
+                <ShieldUser /></span> : <>
+               {isModerator&& <span className="absolute -bottom-1 md:bottom-1 right-1 bg-green-100 p-1 rounded-full text-green-500">
+                 <ShieldHalf/></span> }
+                </>  }   
+              
             </div>
 
             <CardTitle className="mt-4 text-2xl font-bold text-transparent bg-gradient-to-r from-blue-500 to-emerald-500 bg-clip-text">
@@ -40,10 +45,10 @@ export default function UserProfile() {
 
             <p className="text-gray-500 text-sm">{"Member"}</p>
 
-            <Button
+            <Button disabled 
               variant="outline"
               size="sm"
-              className="mt-4 flex items-center gap-2"
+              className="mt-4 flex items-center gap-2 !cursor-not-allowed"
             >
               <Edit size={16} />
               Edit Profile
