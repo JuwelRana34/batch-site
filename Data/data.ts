@@ -26,6 +26,7 @@ export const locations = [
 export const batches = ["17th", "18th", "19th", "20th"];
 
 export const slides = [
+  { src: "/football.jpg", alt: "" },
   { src: "/01.jpg", alt: "" },
   { src: "/02.jpg", alt: "" },
   { src: "/03.jpg", alt: "" },

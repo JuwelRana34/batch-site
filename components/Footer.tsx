@@ -20,10 +20,10 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <h2 className="text-xl font-bold tracking-tight">
-              Classic<span className="text-blue-600">Footer</span>
+              IHC<span className="text-blue-600">18th</span>
             </h2>
             <p className="text-sm text-gray-600 mt-1">
-              Building modern web experiences with style.
+              Always stay together, no matter what comes.
             </p>
           </div>
 
@@ -62,7 +62,7 @@ export default function Footer() {
 
         {/* Bottom section */}
         <div className="text-center text-sm text-gray-500">
-          © {new Date().getFullYear()} ClassicFooter. All rights reserved.
+          © {new Date().getFullYear()} IHC-18th. All rights reserved.
         </div>
       </div>
     </footer>

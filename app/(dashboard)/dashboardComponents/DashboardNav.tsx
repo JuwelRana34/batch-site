@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/context/AuthContext";
-import { Menu } from "lucide-react";
+import { ArrowBigLeftIcon, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -70,7 +70,7 @@ export default function DashboardNav() {
       <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3 ">
         {/* Logo */}
         <Link href="/" className="text-xl font-bold tracking-tight">
-          Classic<span className="text-blue-600">Navbar</span>
+          IHC<span className="text-blue-600">18th</span>
         </Link>
 
         {/* Mobile Menu */}
@@ -118,7 +118,11 @@ export default function DashboardNav() {
                     <DropdownMenuContent className="w-56" align="start">
                       <DropdownMenuLabel>Manage Account</DropdownMenuLabel>
                       <DropdownMenuGroup>
-                        <DropdownMenuItem>Profile</DropdownMenuItem>
+                        <DropdownMenuItem  asChild>
+                          <Link href={'/profile'}>
+                          Profile
+                          </Link>
+                          </DropdownMenuItem>
                       </DropdownMenuGroup>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -128,6 +132,15 @@ export default function DashboardNav() {
                   </Button>
                 )}
                 <LogoutButton />
+                <Link
+                  href="/"
+                  className=" text-center text-primary font-medium"
+                >
+                  
+                 
+                 <ArrowBigLeftIcon className=" inline " />
+                  back to Home
+                </Link>
               </div>
             </SheetContent>
           </Sheet>

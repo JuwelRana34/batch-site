@@ -64,3 +64,11 @@ export interface Photos {
   publicId?:string;
   createdAt:Timestamp;
 }
+
+export interface Routine {
+  id:string;
+  title: string;
+  url: string;
+  publicId?:string;
+  createdAt:Timestamp;
+}

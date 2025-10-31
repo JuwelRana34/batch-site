@@ -62,13 +62,73 @@ export async function deleteImage(publicId: string) {
   return { success: true };
 }
 
-// ✅ Update image (replace + Firestore update)
-export async function updateImage(publicId: string, formData: FormData) {
-  // Upload new image
-  const newUpload = await uploadImage(formData);
 
-  // Delete old one
-  await deleteImage(publicId);
 
-  return newUpload;
+
+
+export async function uploadRoutineAction(formData:FormData) {
+  try {
+    const file = formData.get("image") as File;
+    const title = formData.get("title")?.toString() || "Untitled";
+    if (!file) return { success: false, message: "No file found" };
+
+    // Convert file to buffer
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    // ✅ Upload to Cloudinary folder "routines"
+    const result: any = await new Promise((resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream({ folder: "IHCroutine" }, (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        })
+        .end(buffer);
+    });
+
+    // ✅ Save info in Firestore
+    const docData = {
+      title,
+      url: result.secure_url,
+      publicId: result.public_id,
+      createdAt: new Date(),
+    };
+
+    await db.collection("routine").add(docData);
+
+    // ✅ Revalidate pages if needed
+    revalidatePath("/dashboard/upload-routine");
+    revalidatePath("/");
+
+    return { success: true, message: "Routine uploaded successfully!" };
+  } catch (error) {
+    console.error("Upload failed:", error);
+    return { success: false, message: "Upload failed!" };
+  }
+}
+
+
+// Delete routine by publicId
+export async function deleteRoutine(publicId: string) {
+  try {
+    // Delete from Cloudinary
+    await cloudinary.uploader.destroy(publicId);
+
+    // Delete from Firestore
+    const snap = await db.collection("routine").where("publicId", "==", publicId).get();
+    snap.forEach((doc) => doc.ref.delete());
+
+    // Revalidate pages
+    try {
+      revalidatePath("/dashboard/upload-routine");
+      revalidatePath("/");
+    } catch (err) {
+      console.warn("Revalidate skipped:", err);
+    }
+
+    return { success: true, message: "Routine deleted successfully!" };
+  } catch (err) {
+    console.error(err);
+    return { success: false, message: "Delete failed!" };
+  }
 }

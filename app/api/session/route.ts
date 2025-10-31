@@ -21,24 +21,6 @@ export async function POST(req: Request) {
      // Create long-lived session cookie
     const sessionCookie = await getAuth().createSessionCookie(token, { expiresIn });
 
-  //   const decoded = await getAuth().verifyIdToken(token);
-  //   const isAdmin = decoded.admin === true;
-
-  //   // Save cookie (valid for 5 days)
-  //   const cookieStore = await cookies();
-  //   cookieStore.set("session", token, {
-  //     httpOnly: true,
-  //     secure: process.env.NODE_ENV === "production",
-  //     sameSite: "lax",
-  //     path: "/",
-  //     maxAge: 60 * 60 * 24 * 5,
-  //   });
-
-  //   return NextResponse.json({ success: true, isAdmin });
-  // } catch (error) {
-  //   console.error("Error setting session:", error);
-  //   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  // }
 
     // Set the session cookie
     const cookieStore = await cookies();

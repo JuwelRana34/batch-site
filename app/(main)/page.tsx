@@ -1,16 +1,17 @@
 import { fetchData } from "@/actions/getdata";
 import Carousel from "@/components/Carousel";
 import { slides } from "@/Data/data";
-import { ExamDate } from "@/types/allTypes";
+import { ExamDate, Routine } from "@/types/allTypes";
 import { Sparkles, TrendingUp, User2 } from "lucide-react";
 import Countdown from "../(dashboard)/dashboardComponents/CountDown";
 import ExamRoutine from "./Components/ExamRoutine";
+import Image from "next/image";
 
 export const revalidate = 345600;
 
 export default async function Home() {
   const examDate = await fetchData<ExamDate>("exams");
-
+  const fetchRoutine = await fetchData<Routine>("routine");
   return (
     <div className="min-h-screen">
       <Carousel images={slides} />
@@ -29,6 +30,22 @@ export default async function Home() {
 
       {/* mange exam routine  */}
       <ExamRoutine />
+ <div className="flex justify-center">
+   {fetchRoutine.map((R) => (
+              <div key={R.id}>
+                <h1 className=" capitalize text-center text-3xl md:text-5xl my-2 font-semibold text-transparent bg-linear-to-r from-blue-600 to-green-500 bg-clip-text">{R.title}</h1>
+                <Image
+                  className="h-full w-full"
+                  src={R.url}
+                  width={1000}
+                  height={1000}
+                  alt={R.title}
+                />
+               
+              </div>
+            ))}
+ </div>
+      
 
       {/* <!-- About Us Section --> */}
       <section id="about" className="py-20 bg-white">

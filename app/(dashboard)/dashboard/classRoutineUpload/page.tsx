@@ -1,55 +1,34 @@
-"use client";
+import { fetchData } from "@/actions/getdata";
+import { Routine } from "@/types/allTypes";
+import Image from "next/image";
+import RoutineDeleteBtn from "../../dashboardComponents/RoutineDeleteBtn";
+import UploadRoutine from "../../dashboardComponents/UploadExamRoutine";
 
-import React, { useState } from "react";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-
-
-export default function Page() {
-  const [loading, setLoading] = useState(false);
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    // const formData = new FormData(e.currentTarget);
-
-    setLoading(true);
-    try {
-      // const res = await uploadRoutineAction(formData);
-      toast.success("res.message");
-      e.currentTarget.reset();
-    } catch (err) {
-      console.error(err);
-      toast.error("Upload failed!");
-    } finally {
-      setLoading(false);
-    }
-  }
+export const revalidate = 345600;
+export default async function Page() {
+  const fetchRoutine = await fetchData<Routine>("routine");
 
   return (
-    <section className="py-10 bg-slate-50 min-h-screen">
-      <div className="max-w-lg mx-auto bg-white p-8 rounded-xl shadow-md">
-        <h2 className="text-2xl font-bold mb-6 text-center text-slate-800">
-          Class Routine Upload (Admin)
-        </h2>
+    <>
+      <UploadRoutine />
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <Label htmlFor="title">Routine Title</Label>
-            <Input id="title" name="title" type="text" placeholder="Enter title" required />
+      <div className="flex justify-center">
+        {fetchRoutine.map((R) => (
+          <div key={R.id}>
+            <h1 className=" capitalize text-center text-3xl md:text-5xl my-2 font-semibold text-transparent bg-linear-to-r from-blue-600 to-green-500 bg-clip-text">
+              {R.title}
+            </h1>
+            <Image
+              className="h-full w-full"
+              src={R.url}
+              width={1000}
+              height={1000}
+              alt={R.title}
+            />
+            {R.publicId && <RoutineDeleteBtn publicId={R.publicId} />}
           </div>
-
-          <div>
-            <Label htmlFor="image">Upload Image</Label>
-            <Input id="image" name="image" type="file" accept="image/*" required />
-          </div>
-
-          <Button type="submit" disabled={loading}>
-            {loading ? "Uploading..." : "Upload Routine"}
-          </Button>
-        </form>
+        ))}
       </div>
-    </section>
+    </>
   );
 }
