@@ -1,5 +1,6 @@
 "use client";
 
+import { AddNotice } from "@/actions/getdata";
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
