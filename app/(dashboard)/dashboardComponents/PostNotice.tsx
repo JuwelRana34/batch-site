@@ -36,8 +36,7 @@ export const PostNotice = () => {
           createdAt: new Date(),
           isPublished,
         };
-        // await AddNotice(newNotice)
-        console.log("newNotice:", newNotice);
+        await AddNotice(newNotice)
         setTitle("");
         setDescription("");
         toast.success("Notice posted successfully!");
