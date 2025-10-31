@@ -9,7 +9,7 @@ export default async function Page() {
   const fetchRoutine = await fetchData<Routine>("routine");
 
   return (
-    <>
+    <div className="min-h-screen">
       <UploadRoutine />
 
       <div className="flex justify-center">
@@ -19,16 +19,17 @@ export default async function Page() {
               {R.title}
             </h1>
             <Image
-              className="h-full w-full"
+              className="h-auto w-full"
               src={R.url}
               width={1000}
               height={1000}
               alt={R.title}
+
             />
             {R.publicId && <RoutineDeleteBtn publicId={R.publicId} />}
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }

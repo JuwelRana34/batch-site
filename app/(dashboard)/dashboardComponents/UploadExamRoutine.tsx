@@ -30,7 +30,7 @@ export default function UploadRoutine() {
   }
 
   return (
-    <section className="py-10 bg-slate-50 min-h-screen">
+    <section className="py-10 bg-slate-50">
       <div className="max-w-lg mx-auto bg-white p-8 rounded-xl shadow-md">
         <h2 className="text-2xl font-bold mb-6 text-center text-slate-800">
           Class Routine Upload (Admin)

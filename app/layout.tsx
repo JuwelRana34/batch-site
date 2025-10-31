@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/public/football.jpg",
+        url: "/football.jpg",
         width: 1200,
         height: 630,
         alt: "Jagannath University 18th Batch",

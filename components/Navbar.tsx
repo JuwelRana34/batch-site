@@ -109,7 +109,7 @@ export default function Navbar() {
 
             <SheetContent side="left" className="p-4">
               <h2 className="text-lg font-semibold mb-3">
-                Classic<span className="text-blue-600">Navbar</span>
+                IHC<span className="text-blue-600">18th</span>
               </h2>
               <Separator className="mb-4" />
 
