@@ -34,7 +34,7 @@ export default function DashboardNav() {
       href: "/dashboard/users",
     },
     {
-      name: "Notice",
+      name: "Add Notice",
       href: "/dashboard/notice",
     },
     {

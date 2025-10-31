@@ -50,7 +50,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
         {/* Logo */}
         <Link href="/" className="text-xl font-bold tracking-tight">
-          Classic<span className="text-blue-600">Navbar</span>
+          IHC<span className="text-blue-600">18th</span>
         </Link>
 
         {/* Desktop Links */}

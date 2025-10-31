@@ -24,7 +24,7 @@ export default function DashboardLayout({
       href: "/dashboard/users",
     },
     {
-      name: "Notice",
+      name: "Add Notice",
       href: "/dashboard/notice",
     },
     {

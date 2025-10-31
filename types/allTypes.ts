@@ -59,7 +59,7 @@ export interface ExamTable {
 export interface Photos {
   id:string;
   heading: string;
-  timestamp: Date;
+  timestamp: Timestamp;
   url: string;
   publicId?:string;
   createdAt:Timestamp;
