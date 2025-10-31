@@ -3,7 +3,6 @@ import { AuthProvider } from "@/context/AuthContext";
 import { Providers } from "@/context/TanstakProvider";
 import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
-import Head from "next/head";
 import "./globals.css";
 
 const Nunito = Nunito_Sans({
@@ -58,12 +57,10 @@ export default function Layout({
 }>) {
   return (
     <html lang="en">
-      <Head>
-        <meta
-          name="google-site-verification"
-          content="3MgW4L0fuwgkr-4gVk1_Odm9_aH4KnOesWwQtl6mVKs"
-        />
-      </Head>
+      <meta
+        name="google-site-verification"
+        content="3MgW4L0fuwgkr-4gVk1_Odm9_aH4KnOesWwQtl6mVKs"
+      />
 
       <body className={`${Nunito.variable} antialiased`}>
         <Providers>
